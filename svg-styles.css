@@ -1,0 +1,8 @@
+/** For the map **/
+
+.map-district {
+	fill:#E6E6E6;
+}
+.map-district:hover {
+	fill:#CCCCCC;
+}
