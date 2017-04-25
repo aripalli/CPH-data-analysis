@@ -80,15 +80,16 @@ var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
 				11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
 
 //d3.csv("us-ag-productivity-2004.csv", function(data) {
-	color.domain([
-		d3.min(dataset, function(d) { return d.value; }), 
-		d3.max(dataset, function(d) { return d.value; })
-	]);
+//	color.domain([
+//		d3.min(dataset, function(d) { return d.value; }), 
+//		d3.max(dataset, function(d) { return d.value; })
+//	]);
 
 	var svg = d3.select(".viz-container-1").append("svg")
 	.attr("width", w)
     .attr("height", h)
     .call(responsivefy);
+//}
 
  //    svg.selectAll("rect")
 	// 		   .data(dataset)
