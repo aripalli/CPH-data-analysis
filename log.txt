@@ -1,3 +1,13 @@
+
 http://gis.stackexchange.com/questions/6412/generate-points-that-lie-inside-polygon
 
 https://github.com/visualisationclass/assignment2
+
+https://gretarg09.github.io/Dtu-SocialDataAnalysis-FinalProject/
+
+color choice =>  https://bl.ocks.org/mbostock/5577023
+
+color bar -> https://bl.ocks.org/mbostock/4060606
+
+https://bl.ocks.org/mbostock/2206590
+

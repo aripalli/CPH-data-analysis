@@ -3,10 +3,14 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles_02.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css" type="text/css" />
+<link rel="stylesheet" href="styles_03.css" type="text/css" />
+<link rel="stylesheet" href="svg-styles09.css" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
+<script src="colorbrewer.min.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -32,7 +36,7 @@ License: Creative Commons Attribution
 	            	<li><a href="index.html">Home</a></li>
 	           		<li><a href="#">About the data</a></li>
 	           		<li><a href="pred.html">Predictions</a></li>
-	           		<li><a href="#">More visualizations</a></li>
+	           		<li><a href="machinelearning.html">Machine Learning</a></li>
 	            	<li><a href="#">Ipython notebook</a></li>
 	            	<li><a href="#">Contact</a></li>
 	            </ul>
@@ -47,8 +51,22 @@ License: Creative Commons Attribution
 					Something clever, corny and catchy here please!
 				</p>
 			</div>
+			<div class="viz-container-2 container"></div>
+			<div class="viz-container-1 container"></div>
+			<div class="group-viz">
+				<div>
 
-			<div class="viz-container-1"></div>
+					
+				</div>
+				<div class="slider">
+					<p>
+				      <label for="amount" class ="slider-label">Year:</label>
+				      <input type="text" id="amount" readonly class="slider-input">
+				    </p>
+					<div id="slider-range-max"></div>
+				<div>
+
+			</div>
 		
 		</article>
 		<article>
@@ -71,96 +89,364 @@ License: Creative Commons Attribution
 </section>
 
 <script type="text/javascript">
-WID =  window.innerWidth
-console.log(WID)
-var w = 700;
-var h = 400;
-var barPadding = 1;			
-var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-				11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+WID =  window.innerWidth-300
+HID =  window.innerHeight-150
+console.log('wid: '+WID)
+console.log('hid: '+HID)
+var w = WID;
+var h = HID;
+var W = 486;
+var H = 519;
+//------COLOR ON MAP---------//
+var colours = colorbrewer.RdYlGn[11]
 
-//d3.csv("us-ag-productivity-2004.csv", function(data) {
-//	color.domain([
-//		d3.min(dataset, function(d) { return d.value; }), 
-//		d3.max(dataset, function(d) { return d.value; })
-//	]);
+var heatmapColour = d3.scale.threshold()
+  .domain(d3.range(0, 1, 1.0 / (colours.length - 1)))
+  .range(colours);
+// dynamic bit...
+var c = d3.scale.linear().domain([0,1000]).range([0,1]);
+//--------------------------//
 
-	var svg = d3.select(".viz-container-1").append("svg")
-	.attr("width", w)
-    .attr("height", h)
-    .call(responsivefy);
-//}
+//---------CREATE BASIS FOR GEOJSON MAP AND BAR------//
+var svg = d3.select(".viz-container-1").append("svg")
+	.attr("width", W)
+    .attr("height",H)
+    .attr("id",'chart1')
 
- //    svg.selectAll("rect")
-	// 		   .data(dataset)
-	// 		   .enter()
-	// 		   .append("rect")
-	// 		   .attr("x", function(d, i) {
-	// 		   		return i * (w / dataset.length);
-	// 		   })
-	// 		   .attr("y", function(d) {
-	// 		   		return h - (d * 4);
-	// 		   })
-	// 		   .attr("width", w / dataset.length - barPadding)
-	// 		   .attr("height", function(d) {
-	// 		   		return d * 4;
-	// 		   })
-	// 		   .attr("fill", function(d) {
-	// 				return "rgb(0, 0, " + (d * 10) + ")";
-	// 		   });
+
+// var aspect = 486 / 519,
+//     chart = d3.select('#chart');
+// d3.select(window)
+//   .on("resize", function() {
+//     var targetWidth = chart.node().getBoundingClientRect().width;
+//     chart.attr("width", targetWidth);
+//     chart.attr("height", targetWidth / aspect);
+//   })
+    //.call(responsivefy);
+
 var mapG = svg.append("g");
 var p = d3.geo.mercator()
-			.center([-122.433701, 37.767683])//.center([12.568359375,55.67835873246176])
-			.scale(100000)
-			.translate([w / 2, h / 2]);
+			.center([12.5541493,55.673577])
+			.scale(135000)
+
+			.translate([W / 2, H / 2]);
 var path = d3.geo.path().projection(p);
+createMap()
+//-------------------------------------------//
 
-createSFPDmap()
+//------CREATE BASIS FOR BAR---------//
+var barMargin = {top: 10, right: 5, bottom: 10, left: 20};
+var barW = (W) - barMargin.left - barMargin.right,
+    barH = H - barMargin.top - barMargin.bottom;
+    console.log(barH)
+var barPadding = 1;
+
+var svgBar = d3.select(".viz-container-1").append("svg")
+ 	.attr("width", barW +  barMargin.left + barMargin.right)
+    .attr("height", barH  + barMargin.top + barMargin.bottom)
+    .attr("id",'chart2');
 
 
-function createSFPDmap() {
-	d3.json("sfpddistricts.geojson", function(json) {
+
+
+/***********-----DUMMY DATA FOR TEST*************/
+			//
+var data = [
+  { year: "2006", redDelicious: "10", mcintosh: "30", oranges: "60"},
+  { year: "2007", redDelicious: "2", mcintosh: "6", oranges: "20"},
+  { year: "2008", redDelicious: "70", mcintosh: "20", oranges: "10"},
+];
+dataset=[2,1,10]
+
+
+
+
+var dataset2 = d3.layout.stack()(["redDelicious", "mcintosh", "oranges"].map(function(fruit) {
+  return data.map(function(d) {
+    return {x: d.year, y: +d[fruit]};
+  });
+}));
+console.log(dataset2)
+
+// Set x, y and colors
+// 
+var xStackScale = d3.scale.ordinal()
+  .domain(dataset2[0].map(function(d) { return d.x; }))
+  .rangeRoundBands([10, barW-10], 0.05);
+
+var yStackScale = d3.scale.linear()
+  .domain([0, d3.max(dataset2, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
+  .range([barH-10, 0]);
+
+var colors = ["b33040", "#d25c4d", "#f2b447", "#d9d574"];
+
+
+// Define and draw axes
+var yAxisBar = d3.svg.axis()
+	.scale(yStackScale)
+	.orient("left")
+	.ticks(5)
+	.tickSize(-barW, 0, 0)
+	.tickFormat( function(d) { return d } );
+
+var xAxisBar = d3.svg.axis()
+	.scale(xStackScale)
+	.orient("bottom");
+	//.tickFormat();
+svgBar.append("g")
+  .attr("class", "y axis")
+   .attr("transform", "translate(" + 25 + ",0)")
+  .call(yAxisBar);
+svgBar.append("g")
+  .attr("class", "x axis")
+  .attr("transform", "translate(0," + barH + ")")
+  .call(xAxisBar);
+
+
+
+
+//___----
+
+
+//creating scales for bar
+//
+var barG = svgBar.append("g")
+			.classed("hidden",true)
+			.attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
+
+createBar()
+
+
+
+
+
+//-------------------------------------//
+
+//------COLORBAR---------//
+var colbarHeight = 15;
+var gbar = svg.append("g")
+    .attr("class", "key")
+    .attr("transform", "translate("+(W-140)+","+(H-80)+")");
+var x = d3.scale.linear()
+    .domain([1, 10])
+    .rangeRound([0, 120]);
+var color = d3.scale.threshold()
+    .domain(d3.range(2, 10))
+    .range(colorbrewer.RdYlGn[9]);
+
+gbar.selectAll("rect")
+  .data(color.range().map(function(d) {
+      d = color.invertExtent(d);
+      if (d[0] == null) d[0] = x.domain()[0];
+      if (d[1] == null) d[1] = x.domain()[1];
+      return d;
+    }))
+  .enter().append("rect")
+    .attr("height", colbarHeight)
+    .attr("x", function(d) { return x(d[0]); })
+    .attr("width", function(d) { return x(d[1]) - x(d[0]); })
+    .attr("fill", function(d) { return color(d[0]); });
+
+gbar.append("text").attr("class", "caption").attr("x", x.range()[0]).attr("y", -3).text("% of high income");
+gbar.append("text").attr("class", "smallcap").attr("x", x.range()[0]).attr("y",colbarHeight + 10).text("0%");
+gbar.append("text").attr("class", "smallcap").attr("x", x.range()[1]-10).attr("y", colbarHeight + 10).text("100%");
+gbar.append("rect").attr("height", colbarHeight).attr("y",colbarHeight + 15)
+	.attr("width", 11).attr("fill","#EBEDF4").attr("stroke-width",0.2).attr("stroke","#626262")
+gbar.append("text").attr("class", "smallcap").attr("x", x.range()[0]+15).attr("y",colbarHeight+ 26 ).text("No residency");
+gbar.append("rect").attr("height", colbarHeight).attr("y",colbarHeight+ 35)
+	.attr("width", 11).attr("fill","#9EA0A0").attr("stroke-width",0.2).attr("stroke","#626262")
+gbar.append("text").attr("class", "smallcap").attr("x", x.range()[0]+15).attr("y",colbarHeight+ 46).text("Missing data");
+
+//----------------------//
+
+
+//------TIP---------//
+var tip = d3.tip()
+	  .attr('class', 'd3-tip')
+	  .offset([0,0])
+	  .html(function(d) {
+	  	return 	"<div  class='tiphead' ><strong>"+ d['properties']['rodenavn'] +"</strong></div>" + 
+	    		"<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties']['2011'] + "</span></div>";
+	  });
+svg.call(tip);
+//-----------------//
+//
+//
+//---WHEN CLICK MAP-----//
+d3.select("path").on("click", function(){
+	console.log('hey')
+	var districtID = d3.select(this).attr("id");
+	console.log(districtID)
+
+	if (buttonID == "id2003") {
+
+		year = '2013';
+		d3.select(this).attr("id","id2015")
+
+	} else if (buttonID = "id2015") {
+		year = '2012'
+		d3.select(this).attr("id","id2003")
+		
+	} else {
+		console.log("Something went wrong, please reload page")
+	}
+
+	editMap(mapG,year)
+});
+
+function editBar(rodeId) {
+	console.log('heyegirl')
+	console.log(rodeId)
+	// DUMMY DATA____///
+	var numValues = 3;						 		//Count original length of dataset
+	var maxValue = 10;											//Highest possible new value
+	dataset = [];  						 				 		//Initialize empty array
+	for (var i = 0; i < numValues; i++) {				 		//Loop numValues times
+		var newNumber = Math.floor(Math.random() * maxValue);	//New random integer (0-100)
+		dataset.push(newNumber);			 			 		//Add new number to array
+	}
+	console.log(dataset)
+	barG.classed('hidden',false)
+
+	barG.selectAll("rect")
+	   .data(dataset)
+	   .transition()
+	   .duration(500)
+	   .attr("y", function(d) {
+	   		return barH - yScale(d);
+	   })
+	   .attr("height", function(d) {
+	   		return yScale(d);
+	   })
+	   .attr("fill", function(d) {
+			return "rgb(0, 0, " + (d * 10) + ")";
+	   });
+
+
+
+}
+
+function createBar() {
+barG.classed('hidden',false)
+	// Create groups for each series, rects for each segment 
+	var barGroups = barG.selectAll("g.cost")
+	  .data(dataset2)
+	  .enter().append("g")
+	  .attr("class", "cost")
+	  .style("fill", function(d, i) { return colors[i]; });
+
+	var barRect = barGroups.selectAll("rect")
+	  .data(function(d) { return d; })
+	  .enter()
+	  .append("rect")
+	  .attr("x", function(d) { return xStackScale(d.x); })
+	  .attr("y", function(d) { return yStackScale(d.y0 + d.y); })
+	  .attr("height", function(d) { return yStackScale(d.y0) - yStackScale(d.y0 + d.y); })
+	  .attr("width", xStackScale.rangeBand())
+	  .on("mouseover", function() { tooltip.style("display", null); })
+	  .on("mouseout", function() { tooltip.style("display", "none"); })
+	  .on("mousemove", function(d) {
+	    var xPosition = d3.mouse(this)[0] - 15;
+	    var yPosition = d3.mouse(this)[1] - 25;
+	    tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+	    tooltip.select("text").text(d.y);
+	  });
+
+
+
+
+
+	// barG.selectAll("rect")
+	//    .data(dataset)
+	//    .enter()
+	//    .append("rect")
+	//    .attr("x", function(d, i) {
+	//    		return xScale(i);
+	//    })
+	//    .attr("y", function(d) {
+	//    		return barH - yScale(d);
+	//    })
+	//    .attr("width", xScale.rangeBand())
+	//    .attr("height", function(d) {
+	//    		return yScale(d);
+	//    })
+	//    .attr("fill", function(d) {
+	// 		return "rgb(0, 0, " + (d * 10) + ")";
+	//    });
+}
+
+function createMap() {
+	d3.json("geodata.geojson", function(json) {
 		console.log(json.features)
         mapG.selectAll("path")
            .data(json.features)
            .enter()
            .append("path")
            .attr("d", path)
-           .attr('stroke-width',0.5)
-		   .attr('stroke',"#626262")
-		   .attr('class', function(d){
-		   	console.log(d)
-		   		return 'map-district'
+		   .on('mouseover', tip.show)
+  		   .on('mouseout', tip.hide)
+  		   .on("click", function(d,i){
+  		   		rodeId = d3.select(this).attr("id")
+                editBar(rodeId);
+                        // update_hourly_histogram();
+                        // update_geo_when_clicked();
+             })
+  		   .attr('class','map-district')
+		   .attr('id', function(d){
+		   		return 'rode-' + d.properties.rode_nr
+		   })
+		   .style("fill", function(d) {
+		   		//Get data value
+		   		var value = d['properties']['2011']
+		   		
+		   		if (value > 0) {
+			   		return heatmapColour(c(value));//If value exists…
+		   		} else if (value == 0) {
+			   		return "#EBEDF4";//If value is undefined…
+			    } else {
+			    	return "#9EA0A0";
+		   		}
 		   });
 	});
 }
 
-function responsivefy(svg) {
-    // get container + svg aspect ratio
-    var container = d3.select(svg.node().parentNode),
-        width = parseInt(svg.style("width")),
-        height = parseInt(svg.style("height")),
-        aspect = width / height;
+function editMap(map,year) {
+	console.log('I am in the function fuck....')
+ 	mapG.selectAll("path")
+        .transition()
+        .duration(500)
+        .style("fill", function(d) { 
+	   		//Get data value
+	   		var value = d['properties'][year]
 
-    // add viewBox and preserveAspectRatio properties,
-    // and call resize so that svg resizes on inital page load
-    svg.attr("viewBox", "0 0 " + width + " " + height)
-        .attr("perserveAspectRatio", "xMinYMid")
-        .call(resize);
-
-    // to register multiple listeners for same event type, 
-    // you need to add namespace, i.e., 'click.foo'
-    // necessary if you call invoke this function for multiple svgs
-    // api docs: https://github.com/mbostock/d3/wiki/Selections#on
-    d3.select(window).on("resize." + container.attr("id"), resize);
-
-    // get width of container and resize svg to fit it
-    function resize() {
-        var targetWidth = parseInt(container.style("width"));
-        svg.attr("width", targetWidth-50);
-        svg.attr("height", Math.round((targetWidth-50) / aspect));
-    }
+	   		if (value > 0) {
+		   		return heatmapColour(c(value));//If value exists…
+	   		} else if (value == 0) {
+		   		return "#EBEDF4";//If value is undefined…
+		    } else {
+		    	return "#9EA0A0";
+	   		}
+	   	});
 }
+ 
+$( function() {
+	$( "#slider-range-max" ).slider({
+	range: "max",
+	min: 2008,
+	max: 2013,
+	value: 2,
+	slide: function( event, ui ) {
+	    $( "#amount" ).val( ui.value );
+	    //var placeholder = $("#viz1")
+	    //jQuery("svg", placeholder).remove();
+
+	    var datayear = ui.value.toString() 
+	    editMap(mapG, datayear);
+	}
+	});
+	$( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+} );
+
 </script>
 
 </body>
