@@ -32,39 +32,37 @@ svg {
 
 @keyframes blink {
     0% {
-           background-color: rgba(255,0,0,1)
+           opacity: 0
     }
     50% {
-           background-color: rgba(255,0,0,0.5)
+           opacity: 1
     }
     100% {
-           background-color: rgba(255,0,0,1)
+           opacity: 0
+
     }
 }
 @-webkit-keyframes blink {
     0% {
-           background-color: rgba(255,0,0,1)
+           opacity: 0
     }
     50% {
-           background-color: rgba(255,0,0,0.5)
+           opacity: 1
     }
     100% {
-           background-color: rgba(255,0,0,1)
+           opacity: 0
     }
 }
 
  .active {
 
-    padding: 15px 15px 15px 15px;
-    text-align:center;
-    margin-bottom: 4px;
-    font-size: 24px;
-    border-radius: 5px;
+
     -moz-transition:all 0.5s ease-in-out;
     -webkit-transition:all 0.5s ease-in-out;
     -o-transition:all 0.5s ease-in-out;
     -ms-transition:all 0.5s ease-in-out;
     transition:all 0.5s ease-in-out;
+
     -moz-animation:blink normal 1.5s infinite ease-in-out;
     /* Firefox */
     -webkit-animation:blink normal 1.5s infinite ease-in-out;
@@ -75,26 +73,17 @@ svg {
     /* Opera */
 }
 
-.active {
-/*	stroke-width: 1;
-	stroke:#000000;*/
+/*.active {
+	stroke-width: 1;
+	stroke:#000000;
 	stroke-width: 0.7;
-/*	fill-opacity: .1;*/
+
 	fill: #1F3D5F !important;
 	animation: blink-animation 1s steps(5, start) infinite;
     -webkit-animation: blink-animation 1s steps(5, start) infinite;
 
 }
-@keyframes blink-animation {
-  to {
-    visibility: hidden;
-  }
-}
-@-webkit-keyframes blink-animation {
-  to {
-    visibility: hidden;
-  }
-}
+*/
 
 #district-borders {
   fill: none;

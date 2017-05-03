@@ -4,7 +4,7 @@
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
 <link rel="stylesheet" href="styles.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=15" type="text/css" />
+<link rel="stylesheet" href="svg-styles.css?version=18" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -131,6 +131,25 @@ var p = d3.geo.mercator()
 var path = d3.geo.path().projection(p);
 
 createMap()
+
+var districtTitle = svg.append("g")
+  .attr("class", "title")
+  .style("display", "none");
+    
+districtTitle.append("rect")
+  .attr("width", W)
+  .attr("height", 60)
+  .attr("fill", "white")
+  .style("opacity", 0.8);
+
+districtTitle.append("text")
+  .attr('x',W/2)
+  .attr("dy", "1.8em")
+  .style("text-anchor", "middle")
+  .attr("font-size", "20px")
+  .attr("font-weight", "lighten")
+  .text('Bagsværds');
+
 //-------------------------------------------//
 
 //------CREATE BASIS FOR BAR---------//
@@ -329,13 +348,28 @@ tooltip.append("text")
   .attr("font-weight", "bold");
 
 
+
+
 //-------------------------------------//
 
 //------COLORBAR---------//
 var colbarHeight = 15;
-var gbar = svg.append("g")
+var gbarback = svg.append("g")
     .attr("class", "key")
-    .attr("transform", "translate("+(W-140)+","+(H-80)+")");
+    .attr("transform", "translate("+(W/50)+","+(H-100)+")")
+
+gbarback.append("rect")
+  .attr("width", 145)
+  .attr("height",90)
+  .attr("fill", "white")
+  .style("opacity", 0.75);
+
+var gbar = gbarback.append("g")
+    .attr("class", "key")
+    .attr("transform", "translate("+5+","+20+")")
+
+
+
 var x = d3.scale.linear()
     .domain([1, 10])
     .rangeRound([0, 120]);
@@ -374,8 +408,9 @@ var tip = d3.tip()
 	  .attr('class', 'd3-tip')
 	  .offset([0,0])
 	  .html(function(d) {
+      year = d3.select('#amount').property("value")
 	  	return 	"<div  class='tiphead' ><strong>"+ d['properties']['rodenavn'] +"</strong></div>" + 
-	    		"<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties']['2013'] + "</span></div>";
+	    		"<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties'][year] + "</span></div>";
 	  });
 svg.call(tip);
 //-----------------//
@@ -454,11 +489,14 @@ console.log(d)
     y = centroid[1];
     k = 4;
     centered = d;
+    districtTitle.style("display", null)
+    districtTitle.select("text").text(d.properties.rodenavn)
   } else {
     x = W / 2;
     y = H / 2;
     k = 1;
     centered = null;
+    districtTitle.style("display", "none")
   }
 
   mapG.selectAll("path")
@@ -486,8 +524,6 @@ function createMap() {
      		globalRodeId = rodeId;
             editBar(rodeId);
             clicked(d)
-                    // update_hourly_histogram();
-                    // update_geo_when_clicked();
          })
      .attr('class','map-district')
      .attr('id', function(d){
@@ -505,6 +541,7 @@ function createMap() {
   	    	return "#9EA0A0";
      		}
      });
+
     mapG.append("g")
         .selectAll("path")
         .data(json.features)
@@ -512,7 +549,6 @@ function createMap() {
         .append("path")
         .attr("id", "district-borders")
         .attr("d", path);
-
 	});
 }
 
