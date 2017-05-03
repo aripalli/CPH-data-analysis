@@ -20,13 +20,32 @@ svg {
 }
 
 .map-district {
-	stroke-width:0.2;
-	stroke:#626262;
+/*	stroke-width:0.2;
+	stroke:#626262;*/
 }
 .map-district:hover {
-	stroke-width: 1;
-	stroke:#FFFFFF;
+/*	stroke-width: 1;
+	stroke:#FFFFFF;*/
     fill-opacity: .7;
+}
+
+#states {
+  fill: #aaa;
+}
+
+.active {
+/*	stroke-width: 1;
+	stroke:#000000;*/
+	fill-opacity: .1;
+}
+
+#district-borders {
+  fill: none;
+  stroke:#626262;
+  stroke-width: 0.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
 }
 
 .d3-tip {
@@ -53,6 +72,13 @@ svg {
     stroke: black;
     shape-rendering: crispEdges;
 }
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+
+/* SLIDER*/
 
 .slider-label{
 	font-size: 20px;
