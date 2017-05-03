@@ -29,14 +29,71 @@ svg {
     fill-opacity: .7;
 }
 
-#states {
-  fill: #aaa;
+
+@keyframes blink {
+    0% {
+           background-color: rgba(255,0,0,1)
+    }
+    50% {
+           background-color: rgba(255,0,0,0.5)
+    }
+    100% {
+           background-color: rgba(255,0,0,1)
+    }
+}
+@-webkit-keyframes blink {
+    0% {
+           background-color: rgba(255,0,0,1)
+    }
+    50% {
+           background-color: rgba(255,0,0,0.5)
+    }
+    100% {
+           background-color: rgba(255,0,0,1)
+    }
+}
+
+ .active {
+
+    padding: 15px 15px 15px 15px;
+    text-align:center;
+    margin-bottom: 4px;
+    font-size: 24px;
+    border-radius: 5px;
+    -moz-transition:all 0.5s ease-in-out;
+    -webkit-transition:all 0.5s ease-in-out;
+    -o-transition:all 0.5s ease-in-out;
+    -ms-transition:all 0.5s ease-in-out;
+    transition:all 0.5s ease-in-out;
+    -moz-animation:blink normal 1.5s infinite ease-in-out;
+    /* Firefox */
+    -webkit-animation:blink normal 1.5s infinite ease-in-out;
+    /* Webkit */
+    -ms-animation:blink normal 1.5s infinite ease-in-out;
+    /* IE */
+    animation:blink normal 1.5s infinite ease-in-out;
+    /* Opera */
 }
 
 .active {
 /*	stroke-width: 1;
 	stroke:#000000;*/
-	fill-opacity: .1;
+	stroke-width: 0.7;
+/*	fill-opacity: .1;*/
+	fill: #1F3D5F !important;
+	animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
 }
 
 #district-borders {
@@ -133,3 +190,28 @@ g.tick text {
 }
 
 /**----------------------**/
+
+
+/*BUTTONS SELECTION FOR NATIONALITY*/
+
+.select-style {
+    border: 1px solid #ccc;
+    width: 120px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}
