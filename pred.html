@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles_03.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles09.css" type="text/css" />
+<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="svg-styles.css?version=1" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -39,6 +39,7 @@ License: Creative Commons Attribution
 	           		<li><a href="machinelearning.html">Machine Learning</a></li>
 	            	<li><a href="#">Ipython notebook</a></li>
 	            	<li><a href="#">Contact</a></li>
+	            	<li><a href="stacked.html#">Stacked</a></li>
 	            </ul>
 			</nav>
 		</aside>		
@@ -135,16 +136,19 @@ createMap()
 //-------------------------------------------//
 
 //------CREATE BASIS FOR BAR---------//
-var barMargin = {top: 10, right: 5, bottom: 10, left: 20};
-var barW = (W) - barMargin.left - barMargin.right,
+var barMargin = {top: 20, right: 60, bottom: 20, left: 20};
+var barW = W - barMargin.left - barMargin.right,
     barH = H - barMargin.top - barMargin.bottom;
     console.log(barH)
 var barPadding = 1;
 
-var svgBar = d3.select(".viz-container-1").append("svg")
+var barG = d3.select(".viz-container-1").append("svg")
  	.attr("width", barW +  barMargin.left + barMargin.right)
     .attr("height", barH  + barMargin.top + barMargin.bottom)
-    .attr("id",'chart2');
+    .append("g")
+    .attr("id",'chart2')
+    .attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")")
+    .classed("hidden",true);
 
 
 
@@ -176,7 +180,7 @@ var xStackScale = d3.scale.ordinal()
 
 var yStackScale = d3.scale.linear()
   .domain([0, d3.max(dataset2, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
-  .range([barH-10, 0]);
+  .range([barH, 0]);
 
 var colors = ["b33040", "#d25c4d", "#f2b447", "#d9d574"];
 
@@ -193,11 +197,10 @@ var xAxisBar = d3.svg.axis()
 	.scale(xStackScale)
 	.orient("bottom");
 	//.tickFormat();
-svgBar.append("g")
+barG.append("g")
   .attr("class", "y axis")
-   .attr("transform", "translate(" + 25 + ",0)")
   .call(yAxisBar);
-svgBar.append("g")
+barG.append("g")
   .attr("class", "x axis")
   .attr("transform", "translate(0," + barH + ")")
   .call(xAxisBar);
@@ -210,9 +213,7 @@ svgBar.append("g")
 
 //creating scales for bar
 //
-var barG = svgBar.append("g")
-			.classed("hidden",true)
-			.attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
+// var barG = svgBar.append("g")
 
 createBar()
 

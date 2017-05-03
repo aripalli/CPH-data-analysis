@@ -1,0 +1,102 @@
+/** For the map **/
+
+svg {
+	shape-rendering: crispEdges;
+}
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+
+.map-district {
+	stroke-width:0.2;
+	stroke:#626262;
+}
+.map-district:hover {
+	stroke-width: 1;
+	stroke:#FFFFFF;
+    fill-opacity: .7;
+}
+
+.d3-tip {
+	line-height: 1;
+	text-align: center;
+	padding: 12px;
+	background: rgba(0, 0, 0, 0.8);
+	color: #fff;
+	border-radius: 4px;
+}
+
+.tipperCol {
+	color: #B3B3B3;
+}
+
+.colorbar .axis line{
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.colorbar .axis .domain{
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.slider-label{
+	font-size: 20px;
+	font-weight:bold
+}
+
+.slider-input{
+	border:0;
+	color:#3F81A8;
+	font-size: 20px; 
+	font-weight:bold;
+}
+
+.container {
+}
+
+text.caption {
+	font-size: 14px;	
+}
+text.smallcap {
+	font-size: 12px;
+	font-weight: lighter;	
+}
+
+/** For the bars **/
+.hidden {
+	visibility: hidden;
+}
+
+/** For the axis on bar **/
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+}
+
+path.domain {
+    stroke: none;
+}
+ 
+.y .tick line {
+    stroke: #ddd;
+}
+g.tick text {
+	font-size: 10px;
+	font-weight: lighter;	
+}
+/**----------------------**/
