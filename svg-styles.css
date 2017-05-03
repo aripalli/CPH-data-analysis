@@ -99,4 +99,11 @@ g.tick text {
 	font-size: 10px;
 	font-weight: lighter;	
 }
+
+/** for the legend on bar */
+.legend {
+	font-size: 12px;
+	font-weight: lighter;	
+}
+
 /**----------------------**/
