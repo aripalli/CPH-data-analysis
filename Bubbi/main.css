@@ -1,0 +1,9 @@
+body {
+	margin: 10px;
+	padding: 25px;
+	color: black;
+	background-color: rgba(135, 190, 235, 0.16);
+	font-family:sans-serif;
+	font-weight: bold;
+	font-size: 24px;
+}
