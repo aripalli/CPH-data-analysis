@@ -106,6 +106,9 @@ svg {
 .tipperCol {
 	color: #B3B3B3;
 }
+.key2 {
+	border-radius: 50px;
+}
 
 .colorbar .axis line{
     fill: none;
