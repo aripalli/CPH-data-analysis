@@ -34,12 +34,12 @@ License: Creative Commons Attribution
 			<nav id="mainnav">
 				<ul>
 	            	<li><a href="index.html">Home</a></li>
-	           		<li><a href="#">About the data</a></li>
-	           		<li><a href="pred.html">Predictions</a></li>
+	           		<li><a href="aboutdata.html">About the data</a></li>
+                <li><a href="nationality.html">Nationality distribution</a></li>
+	           		<li><a href="pred.html">Interactive map</a></li>
 	           		<li><a href="machinelearning.html">Machine Learning</a></li>
 	            	<li><a href="#">Ipython notebook</a></li>
 	            	<li><a href="#">Contact</a></li>
-	            	<li><a href="nationality.html">Nationality</a></li>
 	            </ul>
 			</nav>
 		</aside>		
@@ -52,6 +52,14 @@ License: Creative Commons Attribution
 					Something clever, corny and catchy here please!
 				</p>
 			</div>
+				<div class="slider" style="width:700px">
+					<p>
+				      <label for="amount" class ="slider-label hidden">Year:</label>
+				      <input type="text" id="amount" readonly class="slider-input hidden">
+				    </p>
+					<div id="slider-range-max"></div>
+				<div>
+
 				<div class="viz-container-bars"></div>
 				<div>
 				<select class="Country select-style"></select>
@@ -107,9 +115,8 @@ path {
 
 <script>
 var colours = colorbrewer.BrBG[11]
-console.log(colours)
 // Set the dimensions of the canvas / graph
-var margin = {top: 60, right: 80, bottom: 80, left: 60},
+var margin = {top: 50, right: 80, bottom: 80, left: 60},
     width = 700- margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
     var padding = 3;
@@ -142,11 +149,25 @@ var tip = d3.tip()
 
 svgBars.call(tip);
 
-d3.csv("KBH_Top25.csv",function(error, data) {
-	console.log(data)
+var myTextTitleBar = svgBars.append('text')
+		.classed('dataChoose', true)
+		.attr("class","nation-title")
+		.attr("text-anchor", "left")
+		.attr("transform", "translate("+  -10 +","+ -10 +")")
+		.text("Top 25 nationalities in CPH in 2015");
+
+d3.csv("KBH_Top25_AllYears.csv",function(error, rawdata) {
+	year = 2015 
+	
+	data = rawdata.filter(function(row) {
+	    return row['AAR'] == year;
+	});
 
   xbar.domain(data.map(function(d) {return d.COUNTRY; }));
-  ybar.domain([0, d3.max(data, function(d) {return d.Total; })]);
+
+  ybar.domain([0, d3.max(rawdata.map(function(d) {
+  	return +d.Total
+  }))]);
 
   svgBars.append("g")
       .attr("class", "xbar axis")
@@ -171,8 +192,8 @@ d3.csv("KBH_Top25.csv",function(error, data) {
 
   svgBars.selectAll(".bar")
       .data(data)
-    	.enter().append("rect")
-       .attr("class", 'bar')
+      .enter().append("rect")
+      .attr("class", 'bar')
       .attr("id", function(d) { return d.COUNTRY; })
       .style("fill", colours[8])
       .attr("x", function(d) { return xbar(d.COUNTRY); })
@@ -193,8 +214,47 @@ d3.csv("KBH_Top25.csv",function(error, data) {
         .style("fill", colours[8]);
         tip.hide(d)
       });
+  });
+function editBars(year) {
+	d3.csv("KBH_Top25_AllYears.csv",function(error, rawdata) {
+	    
+		
+		data = rawdata.filter(function(row) {
+		    return row['AAR'] == year;
+		});
 
-});
+		xbar.domain(data.map(function(d) {return d.COUNTRY; }));
+	  	// ybar.domain([0, d3.max(data, function(d) {return +d.Total; })]);
+
+		svgBars.selectAll(".bar")
+			.data(data)
+			.transition()
+			.duration(800)
+			.attr("id", function(d) { return d.COUNTRY; })
+			.style("fill", colours[8])
+			.attr("x", function(d) { return xbar(d.COUNTRY); })
+			.attr("width", xbar.rangeBand())
+			.attr("y", function(d) { return ybar(d.Total); })
+			.attr("height", function(d) { return height - ybar(d.Total); })
+
+		svgBars.select(".xbar.axis")
+		    .transition()
+		    .duration(750)
+		    .call(xAxisBar)
+		    .selectAll("text")
+		    .attr("y", 0)
+		    .attr("x", -9)
+		    .attr("dy", ".35em")
+		    .attr("transform", "rotate(-90)")
+		    .style("text-anchor", "end");
+
+		svgBars.select(".y.axis") // change the y axis
+		    .transition()
+		    .duration(750)
+		    .call(yAxisBar);	
+	});
+}
+
 
 // 
 // __________________// __________________// __________//
@@ -241,20 +301,20 @@ svg.append("text")
 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
 .attr("transform", "translate("+ (-40) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
 .style("fill",colours[10])
-.text("Total");
+.text("Number of citizens from nation");
 
 svg.append("text")
 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
 .attr("transform", "translate("+  (width +50) +","+(height/2) +")rotate(90)")  // text is drawn off the screen top left, move down and out and rotate
 .style("fill",colours[2])
-.text("Percentage");
+.text("Percentage of total foreigners");
 
 
 var myTextTitle = svg.append('text')
 		.classed('dataChoose', true)
 		.attr("class","nation-title")
 		.attr("text-anchor", "left")
-		.attr("transform", "translate("+  -10 +","+ -10 +")") 
+		.attr("transform", "translate("+  -10 +","+ -10 +")");
 
 
 d3.csv("KBH_Stats_noDanes_noBydel_1.csv", function(error, data) {
@@ -272,7 +332,6 @@ d3.csv("KBH_Stats_noDanes_noBydel_1.csv", function(error, data) {
     data = data.filter(function(row) {
         return row['COUNTRY'] == selectValueCountry;
     });
-          console.log(data)	
 
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) 
@@ -372,8 +431,8 @@ function theCreation(dataset,District)
 	            .text(function (d) { return d});
 
 	    // When District is Change!
-	    if (District == 1)
-	    {
+	    // if (District == 1)
+	    // {
 	    	var select = d3.select('.District')
 	        .attr('class','select District')
 	        .on('change',onchange)
@@ -387,18 +446,18 @@ function theCreation(dataset,District)
 		        .enter()
 		        .append('option')
 		            .text(function (d) { return d});
-	    }
-	    else
-	    {
+	    // }
+	    // else
+	    // {
 
-	    	var select = d3.select('.District')
-	        .attr('class','select District')
-		    var options = select
-		      .selectAll('option')
-		      	.remove()
-		        .append('option')
-		            .text(function (d) { return 'All Districts'});
-	    }
+	    // 	var select = d3.select('.District')
+	    //     .attr('class','select District')
+		   //  var options = select
+		   //    .selectAll('option')
+		   //    	.remove()
+		   //      .append('option')
+		   //          .text(function (d) { return 'All Districts'});
+	    // }
 
 
 	    // Dataset is change!
@@ -417,9 +476,6 @@ function theCreation(dataset,District)
       		selectValueDistrict = d3.select('.District').property('value')
       		plot(data,selectValueCountry,selectValueDistrict)
         })
-
-
-
 
 	    function plot(data,selectValueCountry){
 
@@ -480,6 +536,27 @@ function theCreation(dataset,District)
 		}
 
 	});
+
+$( function() {
+
+	$( "#slider-range-max" ).slider({
+	range: "max",
+	min: 1992,
+	max: 2015,
+	value: 2015,
+	slide: function( event, ui ) {
+	    $( "#amount" ).val( ui.value );
+
+	    var datayear = ui.value
+	    editBars(datayear)
+
+	    myTextTitleBar.text("Top 25 nationalities in CPH in " + datayear.toString());
+	}
+	});
+	$( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+} );
+
+
 }
 
 </script>

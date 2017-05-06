@@ -33,13 +33,14 @@ License: Creative Commons Attribution
 			</header>
 			<nav id="mainnav">
 				<ul>
-	            	<li><a href="index.html">Home</a></li>
-	           		<li><a href="#">About the data</a></li>
-	           		<li><a href="pred.html">Predictions</a></li>
-	           		<li><a href="machinelearning.html">Machine Learning</a></li>
-	            	<li><a href="#">Ipython notebook</a></li>
-	            	<li><a href="#">Contact</a></li>
-	            	<li><a href="nationality.html">Nationality</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="aboutdata.html">About the data</a></li>
+                <li><a href="nationality.html">Nationality distribution</a></li>
+                <li><a href="pred.html">Interactive map</a></li>
+                <li><a href="machinelearning.html">Machine Learning</a></li>
+                <li><a href="#">Ipython notebook</a></li>
+                <li><a href="#">Contact</a></li>
+
 	            </ul>
 			</nav>
 		</aside>		
@@ -59,14 +60,13 @@ License: Creative Commons Attribution
 
 					
 				</div>
-				<div class="slider">
+				<div class="slider" style="width:800px">
 					<p>
 				      <label for="amount" class ="slider-label">Year:</label>
 				      <input type="text" id="amount" readonly class="slider-input">
 				    </p>
 					<div id="slider-range-max"></div>
 				<div>
-
 			</div>
 		
 		</article>
@@ -90,12 +90,7 @@ License: Creative Commons Attribution
 </section>
 
 <script type="text/javascript">
-WID =  window.innerWidth-300
-HID =  window.innerHeight-150
-console.log('wid: '+WID)
-console.log('hid: '+HID)
-var w = WID;
-var h = HID;
+
 var W = 486;
 var H = 519;
 var centered;
@@ -154,8 +149,8 @@ districtTitle.append("text")
 
 //------CREATE BASIS FOR BAR---------//
 var Wshrink = 350
-var barMargin = {top: 40, right: 20, bottom: 10, left: 26};
-var barMargin2 = {top: 40, right: 150, bottom: 10, left: 26};
+var barMargin = {top: 40, right: 20, bottom: 10, left: 28};
+var barMargin2 = {top: 40, right: 150, bottom: 10, left: 28};
 var barW = W-Wshrink - barMargin.left - barMargin.right,
     barH = H - barMargin.top - barMargin.bottom;
 
@@ -212,7 +207,6 @@ var yStackScale = d3.scale.linear()
 var barColorsAge = colorbrewer.Oranges[7];
 var barColors = colorbrewer.Blues[3]
 var allColors = barColorsAge.concat(["#FFFFFF","#FFFFFF"]).concat(barColors).concat(["#FFFFFF"])
-console.log(allColors)
 // Define and draw axes
 var yAxisBar = d3.svg.axis()
 	.scale(yStackScale)
@@ -432,7 +426,10 @@ var tip = d3.tip()
 	  .html(function(d) {
       year = d3.select('#amount').property("value")
 	  	return 	"<div  class='tiphead' ><strong>"+ d['properties']['rodenavn'] +"</strong></div>" + 
-	    		"<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties'][year] + "</span></div>";
+	    		"<div><strong>Number of homes:</strong> <span class='tipperCol' >" + d['properties'][year]['Num_house'] + "</span></div>" +
+          "<div><strong>Number of inhabitants:</strong> <span class='tipperCol' >" + d['properties'][year]['Num_people'] + "</span></div>" +
+          "<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties'][year]['High_inc'] + "</span></div>" +
+          "<div><strong>% of danes:</strong> <span class='tipperCol' >" + d['properties'][year]['Pct_danes'] + "</span></div>" ;
 	  });
 svg.call(tip);
 //-----------------//
@@ -443,7 +440,7 @@ function editBar(rodeId) {
 	d3.json("bardata.json", function(error,jsonBar) {
 
 		if (error) throw error;
-console.log()
+
 		rode = rodeId;
 		year = d3.select('#amount').property("value")
 		
@@ -490,8 +487,7 @@ console.log()
 
 function clicked(d,rodeId) {
   var x, y, k;
-console.log('yeeee')
-console.log(d)
+
   if (d && centered !== d) {
     var centroid = path.centroid(d);
     x = centroid[0];
@@ -521,9 +517,11 @@ console.log(d)
       .attr("transform", "translate(" + W / 2 + "," + H / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
 }
-
+var objective = 'High_inc'
 function createMap() {
-	d3.json("geodata1.geojson", function(error,json) {
+	d3.json("geodata.geojson", function(error,json) {
+    console.log(json)
+
     if (error) throw error;
     mapG.append("g")
       .selectAll("path")
@@ -545,7 +543,7 @@ function createMap() {
      })
      .style("fill", function(d) {
      		//Get data value
-     		var value = d['properties']['2008']
+     		var value = d['properties']['2013'][objective]
      		
      		if (value > 0) {
   	   		return heatmapColour(c(value));//If value exists…
@@ -573,7 +571,7 @@ function editMap(map,year) {
         .duration(500)
         .style("fill", function(d) { 
 	   		//Get data value
-	   		var value = d['properties'][year]
+	   		var value = d['properties'][year][objective]
 
 	   		if (value > 0) {
 		   		return heatmapColour(c(value));//If value exists…
@@ -590,7 +588,7 @@ $( function() {
 	range: "max",
 	min: 2008,
 	max: 2013,
-	value: 2,
+	value: 2013,
 	slide: function( event, ui ) {
 	    $( "#amount" ).val( ui.value );
 	    //var placeholder = $("#viz1")

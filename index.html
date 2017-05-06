@@ -3,9 +3,14 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles.css?version=1" type="text/css" />
+<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="svg-styles.css?version=22" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
+<script src="colorbrewer.min.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -29,34 +34,45 @@ License: Creative Commons Attribution
 			<nav id="mainnav">
 				<ul>
 	            	<li><a href="index.html">Home</a></li>
-	           		<li><a href="#">About the data</a></li>
-	           		<li><a href="pred.html">Predictions</a></li>
+	           		<li><a href="aboutdata.html">About the data</a></li>
+                <li><a href="nationality.html">Nationality distribution</a></li>
+	           		<li><a href="pred.html">Interactive map</a></li>
 	           		<li><a href="machinelearning.html">Machine Learning</a></li>
 	            	<li><a href="#">Ipython notebook</a></li>
 	            	<li><a href="#">Contact</a></li>
 	            </ul>
 			</nav>
-		</aside>				
+		</aside>			
 	<section id="content" class="column-right">  		
 	    <article>			
-		<h2>Assignment 2A: One scatter plot and two datasets</h2>
-			<div class="article-info">Social Data & Visualization 2017</div>
+		<h2>Socio-economical trends in Copenhagen.</h2>
+			<div class="article-info">Do foreigner have it as good as locals?</div>
 
 			<div class="text-container">
 				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate ante eget imperdiet aliquet. Quisque eget eros lacus. Etiam tempor, libero ut dapibus sagittis, mi sapien aliquet dui, et pretium eros arcu id magna. Vivamus blandit a turpis at sollicitudin. Donec sed mi at justo finibus faucibus eu vulputate quam. Curabitur congue, sapien eget aliquam eleifend, orci risus ullamcorper mauris, eu sagittis est lectus sed dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In tortor odio, commodo eu efficitur nec, dignissim quis dolor.
+					This website was created in order to demonstrate skills learned in the course 02806 at DTU. The course is called <a href="http://kurser.dtu.dk/course/02806">Social data analysis and visualzation </a> and is all about enabling students to create visualizations of complex data sets and to apply common strategies for detecting sentiment in media.
+				</p>
+				<p>
+				For many years, Copenhagen has been ranked one of the top countries for quality of living, <a href="http://www.bbc.com/travel/story/20110906-living-in-copenhagen">(see article)</a>. But do foreigners have the same living standards as the local Danish people? The goal and motivation for this project is to analyze socio economic data and see how and where international people and danes of Copenhagen are living. Furthermore, see if some areas show certain trends and try to explain why. 
 				</p>
 			</div>
-
 			<div class="viz-container"></div>
-		
 		</article>
 		<article>
-		<h2>Other title</h2>
-			<div class="article-info">Social Data & Visualization 2017</div>
+		<h2>Let it flow</h2>
+			<div class="article-info">Recommendations how to go through the analysis and result</div>
 			<div class="text-container">
 				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate ante eget imperdiet aliquet. Quisque eget eros lacus. Etiam tempor, libero ut dapibus sagittis, mi sapien aliquet dui, et pretium eros arcu id magna. Vivamus blandit a turpis at sollicitudin. Donec sed mi at justo finibus faucibus eu vulputate quam. Curabitur congue, sapien eget aliquam eleifend, orci risus ullamcorper mauris, eu sagittis est lectus sed dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In tortor odio, commodo eu efficitur nec, dignissim quis dolor.
+				It is recommended to follow the button on the sidebar in order from top to bottom.
+					<ul>
+					  <li><b>About the data: </b>Some basic text about this  </li>
+					  <li><b>Basic distributions: </b>Some basic text about this </li>
+					  <li><b>Further Analysis:</b>Some basic text about this </li>
+					  <li><b>Machine Learning:</b>Some basic text about this </li>
+					  <li><b>Summary & Conclusions:</b>Some basic text about this </li>
+					</ul>
+
+					If you want to know more and dive deeper into the analysis we recommend to go to our <a href="#">explainer Notebook </a>which contains all the behind the scenes material.
 				</p>
 			</div>
 
