@@ -55,8 +55,6 @@ svg {
 }
 
  .active {
-
-
     -moz-transition:all 0.5s ease-in-out;
     -webkit-transition:all 0.5s ease-in-out;
     -o-transition:all 0.5s ease-in-out;
@@ -72,18 +70,6 @@ svg {
     animation:blink normal 1.5s infinite ease-in-out;
     /* Opera */
 }
-
-/*.active {
-	stroke-width: 1;
-	stroke:#000000;
-	stroke-width: 0.7;
-
-	fill: #1F3D5F !important;
-	animation: blink-animation 1s steps(5, start) infinite;
-    -webkit-animation: blink-animation 1s steps(5, start) infinite;
-
-}
-*/
 
 #district-borders {
   fill: none;
@@ -170,8 +156,25 @@ path.domain {
 .y .tick line {
     stroke: #ddd;
 }
+.x .tick text {
+    /*font-size: 16px;*/
+    font-weight: lighter;   
+
+}
+
+.nation-title {
+    color:#2f2f2f;
+    font-weight:bold;
+    padding:0 0 5px;
+    margin:0;
+    color:#6296B4;
+    font-size:1.6em;
+    padding-bottom:10px;
+}
+
+
 g.tick text {
-	font-size: 10px;
+	font-size: 11px;
 	font-weight: lighter;	
 }
 

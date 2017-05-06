@@ -3,10 +3,14 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles_02.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css" type="text/css" />
+<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="svg-styles.css?version=22" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
+<script src="colorbrewer.min.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -22,211 +26,152 @@ License: Creative Commons Attribution
 
 <body>
 <section id="body" class="width">
-		<aside id="sidebar" class="column-left">
-			<header>
-				<h1><a href="#">Final<br> Project</a></h1>
-				<h2>Social Data & Visualization<br>Course 02806 @ DTU </h2>
-			</header>
-			<nav id="mainnav">
-				<ul>
-	            	<li><a href="index.html">Home</a></li>
-	           		<li><a href="#">About the data</a></li>
-	           		<li><a href="pred.html">Predictions</a></li>
-	           		<li><a href="#">More visualizations</a></li>
-	            	<li><a href="#">Ipython notebook</a></li>
-	            	<li><a href="#">Contact</a></li>
-	            </ul>
-			</nav>
-		</aside>		
-	<section id="content" class="column-right">  		
-	    <article>			
-		<h2>Machine Learning</h2>
-
-			<div class="text-container">
-				<p>
-					Something clever, corny and catchy here please!
-				</p>
-			</div>
-
-			<div class="viz-container-1"></div>
+<aside id="sidebar" class="column-left">
+	<header>
+		<h1><a href="#">Final<br> Project</a></h1>
+		<h2>Social Data & Visualization<br>Course 02806 @ DTU </h2>
+	</header>
+	<nav id="mainnav">
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li><a href="#">About the data</a></li>
+			<li><a href="pred.html">Predictions</a></li>
+			<li><a href="#">More visualizations</a></li>
+			<li><a href="#">Ipython notebook</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</nav>
+</aside>
 		
-		</article>
-		<article>
-		<h2>Other title</h2>
-			<div class="article-info">Social Data & Visualization 2017</div>
-			<div class="text-container">
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate ante eget imperdiet aliquet. Quisque eget eros lacus. Etiam tempor, libero ut dapibus sagittis, mi sapien aliquet dui, et pretium eros arcu id magna. Vivamus blandit a turpis at sollicitudin. Donec sed mi at justo finibus faucibus eu vulputate quam. Curabitur congue, sapien eget aliquam eleifend, orci risus ullamcorper mauris, eu sagittis est lectus sed dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In tortor odio, commodo eu efficitur nec, dignissim quis dolor.
-				</p>
-			</div>
+<section id="content" class="column-right">  		
+	<article>			
+	<h2>Machine Learning</h2>
 
-			<div class="viz-container"></div>
-		</article>
-		
-		<footer class="clear">
-			<p>&copy; 2015 sitename. <a href="http://zypopwebtemplates.com/">Website Template by</a> by ZyPOP</p>
-		</footer>
-	</section>
+		<div class="text-container">
+			<p>
+				In this section the Socio data set will be explored using different machine learning techniques. The data can be found here http://data.kk.dk/dataset/samlede-socio-data-kbh.
+				The goal is to use this data to both get inside into what features are important when predicting different values. We want to predict the following:
+			</p>
+		</div>
+		<ul>
+		<li>Predict how many have a high income</li>
+		<li>Predict how many are above 65 years old</li>
+		<li>Predict how many danes live in a given rode.</li>
+		</ul>
+		<p>
+		The predicts will be made both with an elastic net method and a random forest regression method. The elastic net is a linear method while the random forest is not. Both methods will be used and compared.
+		For both methods the <i>root mean square error (RMSE) </i> will be given as an estimate for the error. Furthermore the features that the methods deem most important will be investigated.
+		This will serve as a guideline if you for instance want to find a rode with a lot of wealthy people, then you would know what to look for.
+		</p>
+
+
+	
+	</article>
+	
+	<article>
+	<h2>Random Forest</h2>
+		<div class="article-info">Social Data & Visualization 2017</div>
+		<div class="text-container">
+			<p>
+			hej
+			</p>
+	<table style="width:70%">
+	
+	  <tr>
+	  <col width="100">
+		<th>Year</th>
+		<th>High income prediction - RMSE</th>
+		<th>Above 65 years prediction - RMSE</th>
+		<th>Percent danes in a rode prediction - RMSE</th>
+	  </tr>
+	  <tr>
+		<td>All years</td>
+		<td>Smith</td> 
+	  </tr>
+	  <tr>
+		<td>2008</td>
+		<td>Jackson</td> 
+	  </tr>
+	  <tr>
+		<td>2009</td>
+		<td>Smith</td> 
+	  </tr>
+	  	  <tr>
+		<td>2010</td>
+		<td>Smith</td> 
+	  </tr>
+	  <tr>
+		<td>2011</td>
+		<td>Smith</td> 
+	  </tr>
+	  <tr>
+		<td>2012</td>
+		<td>Smith</td> 
+	  </tr>
+	  <tr>
+		<td>2013</td>
+		<td>Smith</td> 
+	  </tr>
+	</table>
+	
+		</div>
+	</article>
+
+<article>
+	<h2>Elastic net</h2>
+		<div class="article-info">Social Data & Visualization 2017</div>
+		<div class="text-container">
+			<p>
+			hej
+			</p>
+	<table style="width:70%">
+	
+	  <tr>
+	  <col width="100">
+		<th>Year</th>
+		<th>High income prediction - RMSE</th>
+		<th>Above 65 years prediction - RMSE</th>
+		<th>Percent danes in a rode prediction - RMSE</th>
+	  </tr>
+	  <tr>
+		<td>All years</td>
+		<td>Smith</td> 
+	  </tr>
+	  <tr>
+		<td>2008</td>
+		<td>Jackson</td> 
+	  </tr>
+	  <tr>
+		<td>2009</td>
+		<td>Smith</td> 
+	  </tr>
+	  	  <tr>
+		<td>2010</td>
+		<td>Smith</td> 
+	  </tr>
+	  <tr>
+		<td>2011</td>
+		<td>Smith</td> 
+	  </tr>
+	  <tr>
+		<td>2012</td>
+		<td>Smith</td> 
+	  </tr>
+	  <tr>
+		<td>2013</td>
+		<td>Smith</td> 
+	  </tr>
+	</table>
+		</div>
+
+</article>
+	
+	<footer class="clear">
+		<p>&copy; 2015 sitename. <a href="http://zypopwebtemplates.com/">Website Template by</a> by ZyPOP</p>
+	</footer>
+</section>
 	<div class="clear"></div>
 </section>
-
-<script type="text/javascript">
-WID =  window.innerWidth
-console.log(WID)
-var w = 700;
-var h = 400;
-var barPadding = 1;			
-var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-				11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
-
-//Define quantize scale to sort data values into buckets of color
-//var color = d3.scale.quantize()
-//			.range(["rgb(181, 30, 30)","rgb(0,109,44)"]);
-			//Colors taken from colorbrewer.js, included in the D3 download
-
-var colours = ['#FF0000','#FF1100','#FF2200','#FF3300','#FF4400','#FF5500','#FF6600','#FF7700','#FF8800','#FF9900','#FFAA00','#FFBB00','#FFCC00','#FFDD00','#FFEE00','#FFFF00','#EEFF00','#DDFF00','#CCFF00','#BBFF00','#AAFF00','#99FF00','#88FF00','#77FF00','#66FF00','#55FF00','#44FF00','#33FF00','#22FF00','#11FF00','#00FF00'];
-
-var heatmapColour = d3.scale.linear()
-  .domain(d3.range(0, 1, 1.0 / (colours.length - 1)))
-  .range(colours);
-
-// dynamic bit...
-var c = d3.scale.linear().domain([0,73.15]).range([0,1]);
-
-//color.domain([0,73.15])
-
-	// color.domain([
-	// 	d3.min(dataset, function(d) { return d.value; }), 
-	// 	d3.max(dataset, function(d) { return d.value; })
-	// ]);
-
-	var svg = d3.select(".viz-container-1").append("svg")
-	.attr("width", w)
-    .attr("height", h)
-    .call(responsivefy);
-//}
-
- //    svg.selectAll("rect")
-	// 		   .data(dataset)
-	// 		   .enter()
-	// 		   .append("rect")
-	// 		   .attr("x", function(d, i) {
-	// 		   		return i * (w / dataset.length);
-	// 		   })
-	// 		   .attr("y", function(d) {
-	// 		   		return h - (d * 4);
-	// 		   })
-	// 		   .attr("width", w / dataset.length - barPadding)
-	// 		   .attr("height", function(d) {
-	// 		   		return d * 4;
-	// 		   })
-	// 		   .attr("fill", function(d) {
-	// 				return "rgb(0, 0, " + (d * 10) + ")";
-	// 		   });
-var mapG = svg.append("g");
-
-// var p = d3.geo.mercator()
-// 			.center([-122.433701, 37.767683])//.center([12.571170190219563, 55.6811663483708])
-// 			.scale(120000)
-// 			.translate([w / 2, h / 2]);
-
-var p = d3.geo.mercator()
-			.center([12.566206639202136, 55.67862122138868])
-			.scale(100000)
-			.translate([w / 2, h / 2]);
-
- var path = d3.geo.path().projection(p);
-
-createSFPDmap()
-
-
-
-
-function createSFPDmap() {
-	d3.json("geodata.geojson", function(json) {
-
-		console.log(json.features)
-        mapG.selectAll("path")
-           .data(json.features)
-           .enter()
-           .append("path")
-           .attr("d", path)
-           .attr('stroke-width',0.5)
-		   .attr('stroke',"#626262")
-		   .attr('class', function(d){
-		   		return 'RODE' + d.properties.rode_nr
-		   })
-		   .style("fill", function(d) {
-		   	console.log(d)
-		   		//Get data value
-		   		var value = d.properties.pct_hoj_indkomst
-		   		
-		   		if (!isNaN(value)) {
-		   			//If value exists…
-			   		return heatmapColour(c(value));
-		   		} else {
-		   			console.log(d)
-		   			console.log(value)
-		   			//If value is undefined…
-			   		return "#ccc";
-		   		}
-		   });
-	});
-	// d3.json("sfpddistricts.geojson", function(json) {
-	// 	console.log(json.features)
- //        mapG.selectAll("path")
- //           .data(json.features)
- //           .enter()
- //           .append("path")
- //           .attr("d", path)
- //           .attr('stroke-width',0.5)
-	// 	   .attr('stroke',"#626262")
-	// 	   .attr('class', function(d){
-	// 	   		return 'map-district'
-	// 	   });
-	// });
-		   // .style("fill", function(d) {
-		   // 		//Get data value
-		   // 		var value = d.properties.value;
-		   		
-		   // 		if (value) {
-		   // 			//If value exists…
-			  //  		return color(value);
-		   // 		} else {
-		   // 			//If value is undefined…
-			  //  		return "#ccc";
-		   // 		}
-		   // });
-
-}
-
-function responsivefy(svg) {
-    // get container + svg aspect ratio
-    var container = d3.select(svg.node().parentNode),
-        width = parseInt(svg.style("width")),
-        height = parseInt(svg.style("height")),
-        aspect = width / height;
-
-    // add viewBox and preserveAspectRatio properties,
-    // and call resize so that svg resizes on inital page load
-    svg.attr("viewBox", "0 0 " + width + " " + height)
-        .attr("perserveAspectRatio", "xMinYMid")
-        .call(resize);
-
-    // to register multiple listeners for same event type, 
-    // you need to add namespace, i.e., 'click.foo'
-    // necessary if you call invoke this function for multiple svgs
-    // api docs: https://github.com/mbostock/d3/wiki/Selections#on
-    d3.select(window).on("resize." + container.attr("id"), resize);
-
-    // get width of container and resize svg to fit it
-    function resize() {
-        var targetWidth = parseInt(container.style("width"));
-        svg.attr("width", targetWidth-50);
-        svg.attr("height", Math.round((targetWidth-50) / aspect));
-    }
-}
-</script>
 
 </body>
 </html>
