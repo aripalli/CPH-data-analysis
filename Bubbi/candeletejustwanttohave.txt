@@ -1,0 +1,10 @@
+for val,i in enumerate(AarList):
+    for val2,j in enumerate(StatkodeList):
+        for val3,k in enumerate(BydelList):
+            Total = sum((BefolkingKBH_Data[((BefolkingKBH_Data['AAR'] == i)  & ( (BefolkingKBH_Data['BYDEL'] == k) ) )])['PERSONER'])
+            Total_Country = sum((BefolkingKBH_Data[((BefolkingKBH_Data['AAR'] == i) & ( (BefolkingKBH_Data['STATKODE'] == j) ) & ( (BefolkingKBH_Data['BYDEL'] == k) ) )])['PERSONER'])
+            if Total == 0:
+                data = 0.0
+            else :
+            data = Total_Country/Total
+            Data_Array = np.append(Data_Array,[[i,j,k,Total_Country,data]],axis = 0)
