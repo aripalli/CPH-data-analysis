@@ -1,11 +1,10 @@
-<!DOCTYPE html>
 <!doctype html>
 <html>
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
 <link rel="stylesheet" href="styles.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=11" type="text/css" />
+<link rel="stylesheet" href="svg-styles.css?version=14" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -53,6 +52,7 @@ License: Creative Commons Attribution
 					Something clever, corny and catchy here please!
 				</p>
 			</div>
+				<div class="viz-container-bars"></div>
 				<div>
 				<select class="Country select-style"></select>
 				<select id="Data" class="select-style">
@@ -60,19 +60,9 @@ License: Creative Commons Attribution
 			        <option value="1">Data with districts</option>
 				</select>
 				<select class="District select-style"></select>
-				<select id="inds" class="select-style">
-				        <option value="Percentage" selected="selected">Percentage</option>
-				        <option value="Total">Total</option>
-				        <option value="Both" selected="selected">Both</option>
-				</select>
 				</div>
 
 				<div class="viz-container"></div>
-
-
-
-
-
 		
 		</article>
 		<article>
@@ -103,8 +93,8 @@ path {
     stroke: #01665e;
     stroke-width: 3;
     fill: none;
+    shape-rendering: auto;
 }
-
 .axis path,
 .axis line {
     fill: none;
@@ -115,20 +105,109 @@ path {
 
 </style>
 
-<!-- load the d3.js library -->    
-<script src="http://d3js.org/d3.v3.min.js"></script>
-
 <script>
 var colours = colorbrewer.BrBG[11]
 console.log(colours)
 // Set the dimensions of the canvas / graph
-var margin = {top: 30, right: 40, bottom: 30, left: 50},
+var margin = {top: 60, right: 80, bottom: 80, left: 60},
     width = 700- margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
-    var padding = 30;
+    var padding = 3;
+
+// _______________BAR MAKING FKN BARS_________________//
+// 
+// 
+var svgBars = d3.select(".viz-container-bars").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    	.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var xbar = d3.scale.ordinal().rangeRoundBands([0,width], .1)
+var ybar = d3.scale.linear().range([height, 0]);
+var xAxisBar = d3.svg.axis()
+    .scale(xbar)
+    .orient("bottom");
+
+var yAxisBar = d3.svg.axis()
+    .scale(ybar)
+    .orient("left");
+    // .tickFormat('%');
+  
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Frequency:</strong> <span style='color:#7CB2C6'>" + Math.round(d.Total) + "</span>";
+  });
+
+svgBars.call(tip);
+
+d3.csv("KBH_Top25.csv",function(error, data) {
+	console.log(data)
+
+  xbar.domain(data.map(function(d) {return d.COUNTRY; }));
+  ybar.domain([0, d3.max(data, function(d) {return d.Total; })]);
+
+  svgBars.append("g")
+      .attr("class", "xbar axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxisBar)
+      .selectAll("text")
+	    .attr("y", 0)
+	    .attr("x", -9)
+	    .attr("dy", ".35em")
+	    .attr("transform", "rotate(-90)")
+	    .style("text-anchor", "end")
+
+  svgBars.append("g")
+      .attr("class", "y axis")
+      .call(yAxisBar)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -margin.right+20)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Frequency");
+
+  svgBars.selectAll(".bar")
+      .data(data)
+    	.enter().append("rect")
+       .attr("class", 'bar')
+      .attr("id", function(d) { return d.COUNTRY; })
+      .style("fill", colours[8])
+      .attr("x", function(d) { return xbar(d.COUNTRY); })
+      .attr("width", xbar.rangeBand())
+      .attr("y", function(d) { return ybar(d.Total); })
+      .attr("height", function(d) { return height - ybar(d.Total); })
+      .on('mouseover',  function(d,i) {
+   		 d3.select(this)
+        .style("transform", "scale(1.1,1.1")
+        .style("transform-origin", "50% 50%")
+        .style("fill", colours[2]);
+        tip.show(d)
+		})
+      .on('mouseout', function(d,i){
+      	 d3.select(this)
+        .style("transform", "scale(1,1)")
+        .style("transform-origin", "50% 50%")
+        .style("fill", colours[8]);
+        tip.hide(d)
+      });
+
+});
+
+// 
+// __________________// __________________// __________//
 
 // Parse the date / time
 var parseDate = d3.time.format("%d-%b-%y").parse;
+
+// Adds the svg canvas
+var svg = d3.select(".viz-container").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    	.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Set the ranges
 var x = d3.scale.linear().range([padding, width - padding * 2]);
@@ -142,29 +221,110 @@ var yAxisLeft = d3.svg.axis().scale(y)
 var yAxisRight = d3.svg.axis().scale(y1)
     .orient("right").ticks(5); 
 
-
-
 var secVar = "Total"
 
 // Define the line
 var valueline = d3.svg.line()
     .x(function(d,section) { return x(d.AAR); })
-    .y(function(d,section) {
-            if(secVar == "Percentage") {return y(d.Percentage)}
-            else {return y(d.Total)}  
-});
+    .y(function(d,section) { return y(d.Total) }); 
 
 var valueline2 = d3.svg.line()
     .x(function(d) { return x(d.AAR); })
-    .y(function(d) { 
-        return y1(d.Percentage)});
-    
-// Adds the svg canvas
-var svg = d3.select(".viz-container").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-    	.append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .y(function(d) { return y1(d.Percentage)});
+
+svg.append("text")
+.attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+.attr("transform", "translate("+ (width/2) +","+(height+margin.bottom - 15)+")")  // centre below axis
+.text("Year");
+
+svg.append("text")
+.attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+.attr("transform", "translate("+ (-40) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+.style("fill",colours[10])
+.text("Total");
+
+svg.append("text")
+.attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+.attr("transform", "translate("+  (width +50) +","+(height/2) +")rotate(90)")  // text is drawn off the screen top left, move down and out and rotate
+.style("fill",colours[2])
+.text("Percentage");
+
+
+var myTextTitle = svg.append('text')
+		.classed('dataChoose', true)
+		.attr("class","nation-title")
+		.attr("text-anchor", "left")
+		.attr("transform", "translate("+  -10 +","+ -10 +")") 
+
+
+d3.csv("KBH_Stats_noDanes_noBydel_1.csv", function(error, data) {
+ 	if (error) throw error;
+
+	selectValueCountry = ""
+
+    data.forEach(function(d) {
+        d.AAR = +d.AAR;
+        d.STATKODE = +d.STATKODE;
+        d.Total = +d.Total;
+        d.Percentage = +d.Percentage;
+    });
+
+    data = data.filter(function(row) {
+        return row['COUNTRY'] == selectValueCountry;
+    });
+          console.log(data)	
+
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) 
+   	{
+   		return d.AAR 
+   	}));
+
+    y.domain([0, d3.max(data, function(d) 
+    { 
+        return Math.max(d.Total);
+    })]);
+
+    y1.domain([0, d3.max(data, function(d) 
+    { return Math.max(d.Percentage);
+    })]);
+
+    svg.append("path")
+    .attr("class","line1")
+    .attr("d", valueline(data));
+
+    // Add the valueline path.
+    svg.append("path")
+    .attr("class", "line2")
+    .style("stroke", colours[2])
+    .attr("d", valueline2(data));
+
+    // Add the X Axis
+    svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+
+    // Add the Y Axis
+     svg.append("g")
+    .attr("class", "yLeft axis")
+    .style("fill", colours[10])
+    .call(yAxisLeft);
+
+    svg.append("g")             
+    .attr("class", "yRight axis")
+    .attr("transform", "translate(" + width + " ,0)")     
+    .style("fill", colours[2])       
+    .call(yAxisRight);
+
+    myTextTitle.data(data).text(function(d) { 
+			return d.COUNTRY
+		});
+
+
+
+
+});
 
 // Get the data
 var dataset = "KBH_Stats_noDanes_noBydel_1.csv"
@@ -199,14 +359,10 @@ function theCreation(dataset,District)
 	        	d.District =+ d.BYDEL
 	        }
 	    });
-
-
 	    // When Country is change!
 	    var select = d3.select('.Country')
 	        .attr('class','select Country')
 	        .on('change',onchange)
-
-
 
 	    var options = select
 	      .selectAll('option')
@@ -234,6 +390,7 @@ function theCreation(dataset,District)
 	    }
 	    else
 	    {
+
 	    	var select = d3.select('.District')
 	        .attr('class','select District')
 		    var options = select
@@ -243,9 +400,6 @@ function theCreation(dataset,District)
 		            .text(function (d) { return 'All Districts'});
 	    }
 
-	    // When The Option is change!
-	    d3.select('#inds')
-	        .on('change',onchange)
 
 	    // Dataset is change!
 	    d3.select('#Data')
@@ -257,11 +411,17 @@ function theCreation(dataset,District)
 	        plot(data,selectValueCountry,selectValueDistrict)
 	    }
 
+      svgBars.selectAll(".bar").on("click", function() {
+      		var selectValueCountry = this.id;
+      		d3.select('.Country').property('value',this.id)
+      		selectValueDistrict = d3.select('.District').property('value')
+      		plot(data,selectValueCountry,selectValueDistrict)
+        })
+
+
 
 
 	    function plot(data,selectValueCountry){
-	        var sect = document.getElementById("inds");
-	        secVar = sect.options[sect.selectedIndex].value;
 
 	        // Filter the data
 	        data = data.filter(function(row)
@@ -276,10 +436,6 @@ function theCreation(dataset,District)
 	        	}
 
 	        });
-	        // Clear data from plot
-
-	        svg.selectAll('*').remove();
-	        
 
 	        // Scale the range of the data
 	        x.domain(d3.extent(data, function(d) 
@@ -287,100 +443,41 @@ function theCreation(dataset,District)
 	       		return d.AAR 
 	       	}));
 
-	        if (secVar == "Both")
-	        {
-	            y.domain([0, d3.max(data, function(d) 
-	            { 
-	                return Math.max(d.Total);
-	            })]);
+            y.domain([0, d3.max(data, function(d) 
+            { 
+                return Math.max(d.Total);
+            })]);
 
-	            y1.domain([0, d3.max(data, function(d) 
-	            { return Math.max(d.Percentage);
-	            })]);
-	                    // Add the valueline path.
-	            svg.append("path")
-	            .attr("d", valueline(data,secVar));
+            y1.domain([0, d3.max(data, function(d) 
+            { return Math.max(d.Percentage);
+            })]);
 
+            var svg = d3.select("body").transition();
 
-	            // Add the valueline path.
-	            svg.append("path")
-	            .attr("class", "line")
-	            .style("stroke", colours[2])
+			svg.select(".line1")   // change the line
+	        	.duration(750)
+	            .attr("d", valueline(data));
+	        svg.select(".line2")   // change the line
+	        	.duration(750)
 	            .attr("d", valueline2(data));
 
-	            // Add the X Axis
-	            svg.append("g")
-	            .attr("class", "x axis")
-	            .attr("transform", "translate(0," + height + ")")
+	        svg.select(".x.axis") // change the x axis
+	            .duration(750)
 	            .call(xAxis);
-
-	            // Add the Y Axis
-	             svg.append("g")
-	            .attr("class", "y axis")
-	            .style("fill", colours[10])
+	        svg.select(".yRight.axis") // change the y axis
+	            .duration(750)
+	            .call(yAxisRight);
+	        svg.select(".yLeft.axis") // change the y axis
+	            .duration(750)
 	            .call(yAxisLeft);
 
-	            svg.append("g")             
-	            .attr("class", "y axis")
-	            .attr("transform", "translate(" + width + " ,0)")     
-	            .style("fill", colours[2])       
-	            .call(yAxisRight);
-
-	            svg.append("text")
-	            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-	            .attr("transform", "translate("+ (width/2-50) +","+(height+(padding))+")")  // centre below axis
-	            .text("Year");
-
-	            svg.append("text")
-	            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-	            .attr("transform", "translate("+ (padding/2) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-	            .text("Total");
-
-	            svg.append("text")
-	            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-	            .attr("transform", "translate("+  (width - (padding/2)) +","+(height/2) +")rotate(90)")  // text is drawn off the screen top left, move down and out and rotate
-	            .text("Percentage");
-
-	        }
-	        else
-	        {
-
-	            y.domain([0, d3.max(data, function(d) 
-	            { 
-	                if(secVar == 'Percentage') {return d.Percentage}
-	                else {return d.Total} 
-	            })]);
-	            
-	            // Add the valueline path.
-	            svg.append("path")
-	            .attr("class", "line")
-	            .attr("d", valueline(data,secVar));
-	        	// Add the X Axis
-	            svg.append("g")
-	            .attr("class", "x axis")
-	            .attr("transform", "translate(0," + height + ")")
-	            .call(xAxis);
-
-	            svg.append("text")
-	            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-	            .attr("transform", "translate("+ (width/2-50) +","+(height+(padding))+")")  // centre below axis
-	            .text("Year");
-
-		        // Add the Y Axis
-		        svg.append("g")
-		            .attr("class", "y axis")
-		            .call(yAxisLeft);
-		        
-		    	svg.append("text")
-		        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-		        .attr("transform", "translate("+ (padding/2) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-		        .text(secVar);
-
-	        }
-
-	    }
-
-
+	        myTextTitle.data(data)
+			    .transition().duration(1000/2)
+			    .style("opacity", 0)
+			    .transition().duration(1000/2)
+			    .style("opacity", 1)
+			    .text(function(d) { return d.COUNTRY });
+		}
 
 	});
 }

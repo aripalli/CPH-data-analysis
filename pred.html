@@ -4,7 +4,7 @@
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
 <link rel="stylesheet" href="styles.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=21" type="text/css" />
+<link rel="stylesheet" href="svg-styles.css?version=22" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -144,18 +144,18 @@ districtTitle.append("rect")
 
 districtTitle.append("text")
   .attr('x',W/2)
-  .attr("dy", "1.8em")
+  .attr("dy", "1.2em")
   .style("text-anchor", "middle")
-  .attr("font-size", "20px")
-  .attr("font-weight", "lighten")
+  .attr("font-size", "35px")
+  .attr("font-weight", "bold")
   .text('Bagsværds');
 
 //-------------------------------------------//
 
 //------CREATE BASIS FOR BAR---------//
 var Wshrink = 350
-var barMargin = {top: 10, right: 20, bottom: 20, left: 26};
-var barMargin2 = {top: 10, right: 150, bottom: 20, left: 26};
+var barMargin = {top: 40, right: 20, bottom: 10, left: 26};
+var barMargin2 = {top: 40, right: 150, bottom: 10, left: 26};
 var barW = W-Wshrink - barMargin.left - barMargin.right,
     barH = H - barMargin.top - barMargin.bottom;
 
@@ -198,11 +198,11 @@ var datasetAge0 = d3.layout.stack()(["a0_5", "a6_17", "a18_29", "a30_39", "a40_4
 // Set x, y and colors
 // 
 var xStackScale = d3.scale.ordinal()
-  .domain(['Income'])
+  .domain(['Income distribution'])
   .rangeRoundBands([10, barW-10], 0.10);
 
 var xStackScaleAge = d3.scale.ordinal()
-  .domain(['Age'])
+  .domain(['Age distribution'])
   .rangeRoundBands([10, barW2-10], 0.1);
 
 var yStackScale = d3.scale.linear()
@@ -223,25 +223,25 @@ var yAxisBar = d3.svg.axis()
 
 var xAxisBar = d3.svg.axis()
 	.scale(xStackScale)
-	.orient("bottom");
+	.orient("top");
 
 var xAxisBarAge = d3.svg.axis()
 	.scale(xStackScaleAge)
-	.orient("bottom");
+	.orient("top");
 
 barG.append("g")
   .attr("class", "y axis")
   .call(yAxisBar);
 barG.append("g")
   .attr("class", "x axis")
-  .attr("transform", "translate(0," + barH + ")")
+  .attr("transform", "translate(0," + -10 + ")")
   .call(xAxisBar);
 barG2.append("g")
   .attr("class", "y axis")
   .call(yAxisBar);
 barG2.append("g")
   .attr("class", "x axis")
-  .attr("transform", "translate(0," + barH + ")")
+  .attr("transform", "translate(0," + -10 + ")")
   .call(xAxisBarAge);
 
 // Draw legend
@@ -443,28 +443,27 @@ function editBar(rodeId) {
 	d3.json("bardata.json", function(error,jsonBar) {
 
 		if (error) throw error;
-
+console.log()
 		rode = rodeId;
 		year = d3.select('#amount').property("value")
 		
 		var rawData = [jsonBar[rode][year]];
-		
-
 		var datasetIncomeBar = d3.layout.stack()(["low", "med", "high"].map(function(income) {
 		  return rawData.map(function(d) {
-		    return {x: 'Distribution of wealth', y: +d[income]};
+		    return {y: +d[income]};
 		  });
 		}));
 		
 
 		var datasetAgeBar = d3.layout.stack()(["a0_5","a6_17","a18_29","a30_39","a40_49","a50_64","a65"].map(function(age) {
 		  return rawData.map(function(d) {
-		    return {x: 'Distribution of age', y: +d[age]};
+        if (d[age] >= 0) {
+          return {y: +d[age]};//If value exists…
+        } else {
+          return {y: 0};
+        }		    
 		  });
 		}));
-
-		barG.classed('hidden',false)
-		barG2.classed('hidden',false)
 
 		barGroups.data(datasetIncomeBar);
 		barRect.data(function(d) { 
@@ -489,7 +488,7 @@ function editBar(rodeId) {
 	});
 }
 
-function clicked(d) {
+function clicked(d,rodeId) {
   var x, y, k;
 console.log('yeeee')
 console.log(d)
@@ -501,12 +500,17 @@ console.log(d)
     centered = d;
     districtTitle.style("display", null)
     districtTitle.select("text").text(d.properties.rodenavn)
+    barG.classed('hidden',false)
+    barG2.classed('hidden',false)
+    editBar(rodeId)
   } else {
     x = W / 2;
     y = H / 2;
     k = 1;
     centered = null;
     districtTitle.style("display", "none")
+    barG.classed('hidden',true)
+    barG2.classed('hidden',true)
   }
 
   mapG.selectAll("path")
@@ -532,8 +536,8 @@ function createMap() {
       .on("click", function(d,i){
      		rodeId = d3.select(this).attr("id")
      		globalRodeId = rodeId;
-            editBar(rodeId);
-            clicked(d)
+            // editBar(rodeId);
+            clicked(d,rodeId)
          })
      .attr('class','map-district')
      .attr('id', function(d){
