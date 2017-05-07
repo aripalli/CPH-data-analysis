@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
 <script src="colorbrewer.min.js"></script>
@@ -62,13 +64,10 @@ License: Creative Commons Attribution
 
 				<div class="viz-container-bars"></div>
 				<div>
-				<select class="Country select-style"></select>
-				<select id="Data" class="select-style">
-					<option value=""  selected="selected">Data without districts</option>
-			        <option value="1">Data with districts</option>
-				</select>
-				<select class="District select-style"></select>
-				<a href="#" class="button showDanes">See distribution of Danes</a>
+					<select class="Country select-style select_join" ></select>
+					<a  class="button showForeign">Show other nations</a>
+					<select class="District select-style select_join2 "></select>
+				<a  class="button showDanes">See distribution of Danes</a>
 				</div>
 
 				<div class="viz-container"></div>
@@ -111,10 +110,18 @@ path {
     stroke-width: 1;
     shape-rendering: crispEdges;
 }
+a {
+	cursor: pointer;
+}
+.bar {
+	cursor: pointer;
+}
+
 
 </style>
 
 <script>
+$('.showForeign').hide();
 var colours = colorbrewer.BrBG[11]
 // Set the dimensions of the canvas / graph
 var margin = {top: 50, right: 80, bottom: 80, left: 70},
@@ -291,9 +298,6 @@ var valueline = d3.svg.line()
 var valueline2 = d3.svg.line()
     .x(function(d) { return x(d.AAR); })
     .y(function(d) { 
-    	console.log(d)
-    	console.log(danes)
-
     	if (danes) {
 			return y1(d.Total)	
     	} else {
@@ -329,11 +333,11 @@ var myTextTitle = svg.append('text')
 		.attr("transform", "translate("+  -10 +","+ -10 +")");
 
 
-d3.csv("KBH_Stats_noDanes_noBydel_1.csv", function(error, data) {
+d3.csv("KBH_Stats_noDanes.csv", function(error, data) {
  	if (error) throw error;
 
-	selectValueCountry = ""
-
+	selectValueCountry = "";
+	selectValueDistrict = "";
     data.forEach(function(d) {
         d.AAR = +d.AAR;
         d.STATKODE = +d.STATKODE;
@@ -341,8 +345,48 @@ d3.csv("KBH_Stats_noDanes_noBydel_1.csv", function(error, data) {
         d.Percentage = +d.Percentage;
     });
 
+    	var countryOptions = d3.map(data, function(d){return d['COUNTRY'];}).keys().sort();
+    	var districtOptions = d3.map(data, function(d){ return d['DISTRICT']}).keys().sort();
+
+	   	$(".Country").select2({
+			data: countryOptions,
+			width: "200px"
+		});
+
+		$(".District").select2({
+			data: districtOptions,
+			width: "150px"
+		});
+
+		$('.Country').on("select2:select", function(e) { 
+		   onchange();
+		});
+		$('.District').on("select2:select", function(e) { 
+		   onchange();
+		});
+
+	    function onchange() {
+	    	if (clickDane) {
+	    		selectValueDistrict = d3.select('.District').property('value')
+		        plotDanes(selectValueDistrict)	  
+	    	} else {
+		        selectValueCountry = d3.select('.Country').property('value')
+		        selectValueDistrict = d3.select('.District').property('value')
+		        plot(selectValueCountry,selectValueDistrict)	    	
+	    	}
+	    }
+
+	    svgBars.selectAll(".bar").on("click", function() {
+			var selectValueCountry = this.id;
+			d3.select('.Country').property('value',this.id)
+			selectValueDistrict = d3.select('.District').property('value')
+			plot(selectValueCountry,selectValueDistrict)
+		});
+
+
+
     data = data.filter(function(row) {
-        return row['COUNTRY'] == selectValueCountry;
+        return row['COUNTRY'] == selectValueCountry && row['DISTRICT'] == selectValueDistrict;;
     });
 
     // Scale the range of the data
@@ -365,7 +409,6 @@ d3.csv("KBH_Stats_noDanes_noBydel_1.csv", function(error, data) {
     .attr("d", valueline(data));
 
     // Add the valueline path.
-    danes=false;
     svg.append("path")
     .attr("class", "line2")
     .style("stroke", colours[2])
@@ -394,190 +437,115 @@ d3.csv("KBH_Stats_noDanes_noBydel_1.csv", function(error, data) {
 		});
 });
 
-// Get the data
-var dataset = "KBH_Stats_noDanes_noBydel_1.csv"
-theCreation(dataset)
-
-function DataSelection() {
-    var sect = document.getElementById("Data");
-    secVar = sect.options[sect.selectedIndex].value;
-    var District = 0
-    if (secVar == "1")
-    {
-        dataset = "KBH_Stats_noDanes.csv"
-        District = 1
-    }
-    else
-    {
-        dataset = "KBH_Stats_noDanes_noBydel_1.csv"
-    }
-    theCreation(dataset,District)
-}
-
-function theCreation(dataset,District)
-{
-	d3.csv(dataset, function(error, data) {
+function plot(selectValueCountry,selectValueDistrict){
+	d3.csv("KBH_Stats_noDanes.csv", function(error, data) {
 	    data.forEach(function(d) {
 	        d.AAR = +d.AAR;
 	        d.STATKODE = +d.STATKODE;
 	        d.Total = +d.Total;
 	        d.Percentage = +d.Percentage;
-	        if (District == 1)
-	        {
-	        	d.District =+ d.BYDEL
-	        }
+	        d.District =+ d.BYDEL
 	    });
-	    // When Country is change!
-	    var select = d3.select('.Country')
-	        .attr('class','select Country')
-	        .on('change',onchange)
 
-	    var options = select
-	      .selectAll('option')
-	        .data(d3.map(data, function(d){return d['COUNTRY'];}).keys().sort())
-	        .enter()
-	        .append('option')
-	            .text(function (d) { return d});
+        // Filter the data
+        data = data.filter(function(row) { 
+        	return (row['COUNTRY'] == selectValueCountry && row['DISTRICT'] == selectValueDistrict);
+        });
 
-	    // When District is Change!
-	    // if (District == 1)
-	    // {
-	    	var select = d3.select('.District')
-	        .attr('class','select District')
-	        .on('change',onchange)
-		    var options = select
-		      .selectAll('option')
-		        .data(d3.map(data, function(d)
-		        {
-		        	return d['DISTRICT']
-		        }).keys().sort())
-		        
-		        .enter()
-		        .append('option')
-		            .text(function (d) { return d});
-	    // }
-	    // else
-	    // {
+        // Scale the range of the data
+        x.domain(d3.extent(data, function(d) 
+       	{
+       		return d.AAR 
+       	}));
 
-	    // 	var select = d3.select('.District')
-	    //     .attr('class','select District')
-		   //  var options = select
-		   //    .selectAll('option')
-		   //    	.remove()
-		   //      .append('option')
-		   //          .text(function (d) { return 'All Districts'});
-	    // }
+        y.domain([0, d3.max(data, function(d) 
+        { 
+            return Math.max(d.Total);
+        })]);
 
+        y1.domain([0, d3.max(data, function(d) 
+        { return Math.max(d.Percentage);
+        })]);
 
-	    // Dataset is change!
-	    d3.select('#Data')
-	    	.on('change',DataSelection)
+        var svg = d3.select("body").transition();
 
-	    function onchange() {
-	        selectValueCountry = d3.select('.Country').property('value')
-	        selectValueDistrict = d3.select('.District').property('value')
-	        plot(data,selectValueCountry,selectValueDistrict)
-	    }
+		svg.select(".line1")   // change the line
+        	.duration(750)
+            .attr("d", valueline(data));
+        danes = false;
+        svg.select(".line2")   // change the line
+        	.duration(750)
+            .attr("d", valueline2(data));
 
-      svgBars.selectAll(".bar").on("click", function() {
-      		var selectValueCountry = this.id;
-      		d3.select('.Country').property('value',this.id)
-      		selectValueDistrict = d3.select('.District').property('value')
-      		plot(data,selectValueCountry,selectValueDistrict)
-        })
+        svg.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(xAxis);
+        svg.select(".yRight.axis") // change the y axis
+            .duration(750)
+            .call(yAxisRight);
+        svg.select(".yLeft.axis") // change the y axis
+            .duration(750)
+            .call(yAxisLeft);
 
-	    function plot(data,selectValueCountry){
+        myTextTitle.data(data)
+		    .transition().duration(1000/2)
+		    .style("opacity", 0)
+		    .transition().duration(1000/2)
+		    .style("opacity", 1)
+		    .text(function(d) { return d.COUNTRY });
 
-	        // Filter the data
-	        data = data.filter(function(row)
-	        {
-	        	if (District == 1)
-	        	{
-	        		return (row['COUNTRY'] == selectValueCountry && row['DISTRICT'] == selectValueDistrict);
-	        	}
-	        	else
-	        	{
-		            return row['COUNTRY'] == selectValueCountry;	
-	        	}
+		ylabel1.transition().duration(1000/2)
+		    .style("opacity", 0)
+		    .transition().duration(1000/2)
+		    .style("opacity", 1)
+		    .text('Number of citizens from nation')
 
-	        });
-
-	        // Scale the range of the data
-	        x.domain(d3.extent(data, function(d) 
-	       	{
-	       		return d.AAR 
-	       	}));
-
-            y.domain([0, d3.max(data, function(d) 
-            { 
-                return Math.max(d.Total);
-            })]);
-
-            y1.domain([0, d3.max(data, function(d) 
-            { return Math.max(d.Percentage);
-            })]);
-
-            var svg = d3.select("body").transition();
-
-			svg.select(".line1")   // change the line
-	        	.duration(750)
-	            .attr("d", valueline(data));
-	        danes = false;
-	        svg.select(".line2")   // change the line
-	        	.duration(750)
-	            .attr("d", valueline2(data));
-
-	        svg.select(".x.axis") // change the x axis
-	            .duration(750)
-	            .call(xAxis);
-	        svg.select(".yRight.axis") // change the y axis
-	            .duration(750)
-	            .call(yAxisRight);
-	        svg.select(".yLeft.axis") // change the y axis
-	            .duration(750)
-	            .call(yAxisLeft);
-
-	        myTextTitle.data(data)
-			    .transition().duration(1000/2)
-			    .style("opacity", 0)
-			    .transition().duration(1000/2)
-			    .style("opacity", 1)
-			    .text(function(d) { return d.COUNTRY });
-
-			ylabel1.transition().duration(1000/2)
-			    .style("opacity", 0)
-			    .transition().duration(1000/2)
-			    .style("opacity", 1)
-			    .text('Number of citizens from nation')
-
-			ylabel2.transition().duration(1000/2)
-			    .style("opacity", 0)
-			    .transition().duration(1000/2)
-			    .style("opacity", 1)
-			    .text('Percentage of total foreigners')
-		}
-
+		ylabel2.transition().duration(1000/2)
+		    .style("opacity", 0)
+		    .transition().duration(1000/2)
+		    .style("opacity", 1)
+		    .text('Percentage of total foreigners')
 	});
+}
+var clickDane = false;
+	
 
 d3.select(".showDanes").on('mouseover',function(){
-	
-	plotDanes('Indre By')
+	selectValueDistrict = d3.select('.District').property('value')
+	plotDanes(selectValueDistrict)
 });
 d3.select(".showDanes").on('mouseout',function(){
-	console.log('jazz')
-	console.log(dataset)
-	theCreation(dataset,0)
+	if (!clickDane) {
+		selectValueCountry = d3.select('.Country').property('value')
+		selectValueDistrict = d3.select('.District').property('value')
+		plot(selectValueCountry,selectValueDistrict)
+	}
+});
+d3.select(".showDanes").on('click',function(){
+	$('.showForeign').show();
+	$('.Country').next(".select2-container").hide();
+	selectValueDistrict = d3.select('.District').property('value')
+	plotDanes(selectValueDistrict)
+	clickDane = true;
+});
+
+d3.select('.showForeign').on('click', function(){
+	$('.showForeign').hide();
+	$('.Country').next(".select2-container").show();
+	selectValueCountry = d3.select('.Country').property('value')
+	selectValueDistrict = d3.select('.District').property('value')
+	plot(selectValueCountry,selectValueDistrict)
+	clickDane = false;
+
 });
 
 function plotDanes(selectValueDistrict){
 	d3.csv('KBH_Stats.csv', function(error, rawdata) {	
 		if (error) throw error;
 
-selectValueCountry = 'Danmark'
-selectValueDistrict = "Indre By"
-District = 1;
-		console.log(selectValueDistrict)
-		console.log(data)
+		selectValueCountry = 'Danmark'
+		selectValueDistrict = d3.select('.District').property('value')
+
         // Filter the data
 	        data = rawdata.filter(function(row)
 	        {
@@ -588,7 +556,7 @@ District = 1;
 	        	return (row['COUNTRY'] == 'Foreign Nations' && row['DISTRICT'] == selectValueDistrict);
 	        });
 
-        console.log(data2)
+
 
         // Scale the range of the data
         x.domain(d3.extent(data, function(d) 
@@ -666,9 +634,6 @@ $( function() {
 	});
 	$( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
 } );
-
-
-}
 
 </script>
 </body>

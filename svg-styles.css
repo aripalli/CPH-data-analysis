@@ -1,7 +1,7 @@
 /** For the map **/
 
 svg {
-	shape-rendering: crispEdges;
+	/*shape-rendering: crispEdges;*/
 }
 
 .svg-container {
@@ -20,8 +20,8 @@ svg {
 }
 
 .map-district {
-/*	stroke-width:0.2;
-	stroke:#626262;*/
+	stroke-width:0.2;
+	stroke:#626262;
 }
 .map-district:hover {
 /*	stroke-width: 1;
