@@ -4,7 +4,7 @@
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
 <link rel="stylesheet" href="styles.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=22" type="text/css" />
+<link rel="stylesheet" href="svg-styles.css?version=23" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -53,6 +53,8 @@ License: Creative Commons Attribution
 					Something clever, corny and catchy here please!
 				</p>
 			</div>
+      <a  class="button Pct_danes">Percentage of Danes</a>
+      <a  class="button High_inc">Percentage of high income</a>
 			<div class="viz-container-2 container"></div>
 			<div class="viz-container-1 container"></div>
 			<div class="group-viz">
@@ -95,7 +97,8 @@ var W = 486;
 var H = 519;
 var centered;
 //------COLOR ON MAP---------//
-var colours = colorbrewer.RdYlGn[11]
+var nrOfColours = 7
+var colours = colorbrewer.RdYlGn[nrOfColours]
 
 var heatmapColour = d3.scale.threshold()
   .domain(d3.range(0, 1, 1.0 / (colours.length - 1)))
@@ -149,8 +152,8 @@ districtTitle.append("text")
 
 //------CREATE BASIS FOR BAR---------//
 var Wshrink = 350
-var barMargin = {top: 40, right: 20, bottom: 10, left: 28};
-var barMargin2 = {top: 40, right: 150, bottom: 10, left: 28};
+var barMargin = {top: 40, right: 20, bottom: 10, left: 40};
+var barMargin2 = {top: 40, right: 150, bottom: 10, left: 40};
 var barW = W-Wshrink - barMargin.left - barMargin.right,
     barH = H - barMargin.top - barMargin.bottom;
 
@@ -387,11 +390,11 @@ var gbar = gbarback.append("g")
 
 
 var x = d3.scale.linear()
-    .domain([1, 10])
-    .rangeRound([0, 120]);
+    .domain([0, nrOfColours-2])
+    .rangeRound([0, 100]);
 var color = d3.scale.threshold()
-    .domain(d3.range(2, 10))
-    .range(colorbrewer.RdYlGn[9]);
+    .domain(d3.range(1, nrOfColours-2))
+    .range(colorbrewer.RdYlGn[nrOfColours-2]);
 
 gbar.selectAll("rect")
   .data(color.range().map(function(d) {
@@ -408,13 +411,13 @@ gbar.selectAll("rect")
 
 gbar.append("text").attr("class", "caption").attr("x", x.range()[0]).attr("y", -3).text("% of high income");
 gbar.append("text").attr("class", "smallcap").attr("x", x.range()[0]).attr("y",colbarHeight + 10).text("0%");
-gbar.append("text").attr("class", "smallcap").attr("x", x.range()[1]-10).attr("y", colbarHeight + 10).text("100%");
+gbar.append("text").attr("class", "smallcap").style("text-anchor", "end").attr("x", x.range()[1]).attr("y", colbarHeight + 10).text("100%");
 gbar.append("rect").attr("height", colbarHeight).attr("y",colbarHeight + 15)
 	.attr("width", 11).attr("fill","#EBEDF4").attr("stroke-width",0.2).attr("stroke","#626262")
-gbar.append("text").attr("class", "smallcap").attr("x", x.range()[0]+15).attr("y",colbarHeight+ 26 ).text("No residency");
-gbar.append("rect").attr("height", colbarHeight).attr("y",colbarHeight+ 35)
-	.attr("width", 11).attr("fill","#9EA0A0").attr("stroke-width",0.2).attr("stroke","#626262")
-gbar.append("text").attr("class", "smallcap").attr("x", x.range()[0]+15).attr("y",colbarHeight+ 46).text("Missing data");
+gbar.append("text").attr("class", "smallcap").attr("x", x.range()[0]+15).attr("y",colbarHeight+ 26 ).text("Missing Data");
+// gbar.append("rect").attr("height", colbarHeight).attr("y",colbarHeight+ 35)
+// 	.attr("width", 11).attr("fill","#9EA0A0").attr("stroke-width",0.2).attr("stroke","#626262")
+// gbar.append("text").attr("class", "smallcap").attr("x", x.range()[0]+15).attr("y",colbarHeight+ 46).text("Missing data");
 
 //----------------------//
 
@@ -435,6 +438,7 @@ svg.call(tip);
 //-----------------//
 
 var globalRodeId = 1;
+
 
 function editBar(rodeId) {
 	d3.json("bardata.json", function(error,jsonBar) {
@@ -518,6 +522,24 @@ function clicked(d,rodeId) {
       .style("stroke-width", 1.5 / k + "px");
 }
 var objective = 'High_inc'
+
+d3.select('.Pct_danes').on('click', function(){
+  d3.select('.caption').text('% of Danes')
+  objective = 'Pct_danes'
+  year = d3.select('#amount').property("value")
+  editMap(mapG,year,objective)
+});
+
+d3.select('.High_inc').on('click', function(){
+  d3.select('.caption').text('% of high income')
+  objective = 'High_inc'
+  year = d3.select('#amount').property("value")
+  editMap(mapG,year,objective)
+});
+
+
+
+
 function createMap() {
 	d3.json("geodata.geojson", function(error,json) {
     console.log(json)
@@ -553,18 +575,10 @@ function createMap() {
   	    	return "#9EA0A0";
      		}
      });
-
-    mapG.append("g")
-        .selectAll("path")
-        .data(json.features)
-        .enter()
-        .append("path")
-        .attr("id", "district-borders")
-        .attr("d", path);
 	});
 }
 
-function editMap(map,year) {
+function editMap(map,year,objective) {
 	
  	mapG.selectAll("path")
         .transition()
@@ -591,11 +605,9 @@ $( function() {
 	value: 2013,
 	slide: function( event, ui ) {
 	    $( "#amount" ).val( ui.value );
-	    //var placeholder = $("#viz1")
-	    //jQuery("svg", placeholder).remove();
 
 	    var datayear = ui.value.toString() 
-	    editMap(mapG, datayear);
+	    editMap(mapG, datayear, objective);
 	    editBar(globalRodeId)
 	}
 	});
