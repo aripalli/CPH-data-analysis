@@ -50,8 +50,9 @@ License: Creative Commons Attribution
 
 		<div class="text-container">
 			<p>
-				In this section the Socio data set will be explored using different machine learning techniques. The data can be found here http://data.kk.dk/dataset/samlede-socio-data-kbh.
-				The goal is to use this data to both get inside into what features are important when predicting different values. We want to predict the following:
+				In this section the Socio data set will be explored using different machine learning techniques.
+				The goal is to use this data to both get insight into what features are important when predicting different values, and to see how well we can predict.
+				We want to predict the following:
 			</p>
 		</div>
 		<ol>
@@ -61,8 +62,15 @@ License: Creative Commons Attribution
 		</ol>
 		<p>
 		The predicts will be made both with an elastic net method and a random forest regression method. The elastic net is a linear method while the random forest is not. Both methods will be used and compared.
-		For both methods the <i>root mean square error (RMSE) </i> will be given as an estimate for the error. Furthermore the features that the methods deem most important will be investigated.
-		This will serve as a guideline if you for instance want to find a rode with a lot of wealthy people, then you woold know what to look for.
+		For both methods the <i>root mean square error (RMSE)</i> will be given as an estimate of the error.</p>
+		<img src="RMSE.JPG" alt="RMSE" style="width:200px;height:75px;">
+
+		<p>
+		Furthermore the features that the methods deem most important will be investigated.
+		This will serve as a guideline if you for instance want to find a district with a lot of wealthy people, then you woold know what other features to look for.
+		</p>
+		<p>
+		By looking carefully at the results below, you will be off to the district of your dreams in no time!
 		</p>
 
 
@@ -71,15 +79,15 @@ License: Creative Commons Attribution
 	
 	<article>
 	<h2>Random Forest</h2>
-		<div class="article-info">Social Data & Visualization 2017</div>
+		<div class="article-info">Regression</div>
 
 			<p>
 			Using a random forest regression method the 3 responses mentioned above were predicted. Doing a 10 fold cross-validation to get an estimate of the error gave the results in the table below.
 			The errors are represented as the <i>root mean square error (RMSE) </i>:
 			</p>
-		<img src="RMSE.JPG" alt="RMSE" style="width:200px;height:75px;">
+		
 		<p>
-		The error is presented together with a 95% prediction interval
+		The method was used both using data only for a given year but also when all the data from all years is used. The error of the predictions is presented together with a 95% prediction interval
 		</p>
 	<table style="width:80%">
 	  <tr>
@@ -134,7 +142,17 @@ License: Creative Commons Attribution
 	  </tr>
 	</table>
 			<p>
-			The top 10 features that random forest deem most important can be seen below.
+			The table suggests that we can actually predict the output quite well with most errors being around 5%. It should also be noted how the error is around half of the others, when all the data is used.
+			This makes sense as random forest methods often perform better the more data they have available. The conclusion is that by looking at other features in the data, we can tell a lot about the 3
+			features we want to predict.
+			
+			</p>
+			<p>
+			All of that might sound good, but what is in it for you? Below are the top 10 features that random forest deem most important when predicting.
+			By looking at these you can find things that you should look for if you want to find a district with the predicted feature.
+			It should be noted that an important feature can both be something you should look for or something you should avoid. For instance is the 9th most important feature for predicting
+			high income that people have no education. Logically this is probably because districts where this number is high have a low "high income" number.
+			The features are the ones found when all the data is used.
 			</p>
 	<table style="width:100%">
 	  <tr>
@@ -143,72 +161,76 @@ License: Creative Commons Attribution
 		<th>Predicting amount of people above 65 years </th>
 	  </tr>
 	  <tr>
-		<td><small>1. Percentage of houses larger than m<sup>2</sup></small> </td>
-		<td><small>1. Number of people between 18-29 years </td>
+		<td><small>1. Percent houses larger than m<sup>2</sup></small> </td>
+		<td><small>1. Percent without an education </td>
 		<td><small>1. Percent with a medium income</small> </td>
 
 	  </tr>
 	  <tr>
-		<td><small>2. Perecent with a long education </small></td>
-		<td><small>2. Percentage without an education </small></td>
-		<td><small>2. Percentage of singels without children</small></td>
+		<td><small>2. Percent with a long education </small></td>
+		<td><small>2. Percent singles without children </small></td>
+		<td><small>2. Percent singles without children</small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>3. Percent with a medium long education</td>
-		<td><small>3. Number of singles with no children </small></td>
+		<td><small>3. Percent owner-occupied dwelling</td>
+		<td><small>3. Percent people between 18-29 years </small></td>
 		<td><small>3. Average home area pr. person</small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>4. Percentage of owner-occupied dwelling </td>
-		<td><small>4. Percentage of people between 18-29 years </small></td>
-		<td><small>4. Percentage of other home types</small></td>
+		<td><small>4. Percent with a medium long education</td>
+		<td><small>4. Percent people between 30-39 years</small></td>
+		<td><small>4. Percent homes build 1930-1949</small></td>
 	
 	  </tr>
 	  <tr>
-		<td><small>5. Percentage of couples with children</td>
-		<td><small>5. Percentage of people between 30-39 years </small></td>
-		<td><small>5. Percentage of homes build 1930-1949</small></td>
+		<td><small>5. Percent wage earners</td>
+		<td><small>5. Percent people between 40-49 years </small></td>
+		<td><small>5. Percent other home types</small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>6. Average home area pr. person. </td>
-		<td><small>6. Number of people between 30-39 years </small></td>
-		<td><small>6. Percentage of houses with size 60m<sup>2</sup>-79m<sup>2</sup></small></td>
+		<td><small>6. Percent couples with children </td>
+		<td><small>6. Percent people between 50-64 years  </small></td>
+		<td><small>6. Percent homes build 1950-1979</small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>7. Percentage of couples without children </td>
-		<td><small>7. Percentage of singles with no children</small></td>
-		<td><small>7. Number of homes build 1930-1949</small></td>
+		<td><small>7. Percent people with their own business </td>
+		<td><small>7. Percent with a job</small></td>
+		<td><small>7. Percent houses with size 60m<sup>2</sup>-79m<sup>2</sup></small></td>
 
 	  </tr>
 	  	  <tr>
-		<td><small>8. Percent of people with their own business</td>
-		<td><small>8. Percentage of general housing</small></td>
-		<td><small>8. Number of homes build 1950-1979</small></td>
+		<td><small>8. Percent net newcomers</td>
+		<td><small>8. Percent people studying</small></td>
+		<td><small>8. Percent people with a workman education</small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>9. Percentage of wage earners</td>
-		<td><small>9. Number of inhabitants</small></td>
-		<td><small>9. Percentage of homes build 1950-1979</small></td>
+		<td><small>9. Percent people with no education</td>
+		<td><small>9. Average house area pr. person</small></td>
+		<td><small>9. Percent homes build 1900-1929</small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>10. Percentage in age group 18-29 years</td>
-		<td><small>10. Average house area pr. person</small></td>
-		<td><small>10. Percentage of people with a workman education </small></td>
+		<td><small>10. Average home area pr. person</td>
+		<td><small>10. Percent general housing</small></td>
+		<td><small>10. Percent general housing</small></td>
 
 	  </tr>
 	</table>
-
+			<p>
+			A lot of the features in top 10 probably make good sense. However some might be surprising. It  for instance seem really important to look at the age distribution if you want to find out
+			how many danes there are in a district. This suggests that foreigners in Denmark are found in specific age groups. Number 2 feature here is singles without children. This also makes good sense
+			since refugees fleeing from a war often bring all of their family.
+			</p>
 	</article>
 
 <article>
 	<h2>Elastic net</h2>
-		<div class="article-info">Social Data & Visualization 2017</div>
+		<div class="article-info">Regression</div>
 		<div class="text-container">
 			<p>
 			The same analysis is done with an elastic net. The errors here are also presented together with a 95% prediction interval.
@@ -268,7 +290,13 @@ License: Creative Commons Attribution
 	</table>
 		</div>
 			<p>
-			The top 10 features that elastic net deem most important can be seen below.
+			Here the errors actually increase when the data from all years are used. And it is actually quite low when looking at individual years. Except for 2008.
+			Normally random forest outperforms elastic net. However when there is a lot of features compared to the data, which is the case when only one year is analysed, then elastic net shines
+			since the method is really good at doing dimensionality reduction.
+			</p>
+			<p>
+			The top 10 features that elastic net deem most important are presented below. They are not identical to the ones that random forest found, but they tend to agree with most. Again a lot of the 
+			most important features make sense when you think about what you expectations might be.
 			</p>
 	<table style="width:100%">
 	  <tr>
@@ -277,81 +305,101 @@ License: Creative Commons Attribution
 		<th>Predicting amount of people above 65 years </th>
 	  </tr>
 	  <tr>
-		<td><small>1. Percentage of people with a job</small> </td>
+		<td><small>1. Percent people with a job</small> </td>
 		<td><small>1. Percent singles without children</small> </td>
-		<td><small>1. Percent singles without children</small> </td>
+		<td><small>1. Percent with a medium income</small> </td>
 
 	  </tr>
 	  <tr>
-		<td><small>2. Perecent with a long education </small></td>
-		<td><small>2. Percentage above 65 years</small></td>
-		<td><small>2. Percentage with a medium income</small></td>
+		<td><small>2. Percent owner-occupied dwelling </small></td>
+		<td><small>2. Percent above 65 years</small></td>
+		<td><small>2. Percent singles without children</small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>3. Average home area pr. person</td>
-		<td><small>3. Percentage between 18-29 years</small></td>
+		<td><small>3. Perecentage with a long education</td>
+		<td><small>3. Percent people with a workman education</small></td>
 		<td><small>3. Average home area pr. person</small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>4. Percentage of owner-occupied dwelling </td>
-		<td><small>4. Percentage of people with a workman education</small></td>
-		<td><small>4. Percetange of danes</small></td>
+		<td><small>4. Average home area pr. person </td>
+		<td><small>4. Percent between 18-29 years</small></td>
+		<td><small>4. Percent danes</small></td>
 	
 	  </tr>
 	  <tr>
-		<td><small>5. Percent with a medium long</td>
-		<td><small>5. Percentage between 50-64 years</small></td>
-		<td><small>5. Number of inhabitants</small></td>
+		<td><small>5. Percent with a medium long education</td>
+		<td><small>5. Percent between 40-49 years</small></td>
+		<td><small>5. Percent houses larger than m<sup>2</sup></small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>6. Percentage of couples with children</td>
-		<td><small>6. Percentage between 40-49 years</small></td>
-		<td><small>6. Percentage of homes build 1950-1979 </small></td>
+		<td><small>6. Percent couples with children</td>
+		<td><small>6. Percent between 50-64 years</small></td>
+		<td><small>6. Percent homes build 1950-1979 </small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>7. Percentage of net newcomers </td>
-		<td><small>7. Percentage between 30-39 years</small></td>
-		<td><small>7. Number of singles without children</small></td>
+		<td><small>7. Percent couples without children</td>
+		<td><small>7. Percent people studying</small></td>
+		<td><small>7. Percent homes build 1930-1949</small></td>
 
 	  </tr>
 	  	  <tr>
-		<td><small>8. Number of of owner-occupied dwelling</td>
-		<td><small>8. Percentage of people studying</small></td>
-		<td><small>8. Number of foreigners from western countries</small></td>
+		<td><small>8. Percent net newcomers</td>
+		<td><small>8. Percent between 30-39 years</small></td>
+		<td><small>8. Percent homes with toilet and shower</small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>9. Number of people between 50-64 years</td>
-		<td><small>9. Percentage with a medium long education</small></td>
-		<td><small>9. Number of houses with size 80m<sup>2</sup>-99m<sup>2</sup></small></td>
+		<td><small>9. Percent people with a workman education</td>
+		<td><small>9. Percent couples with children</small></td>
+		<td><small>9. Percent houses with size 60m<sup>2</sup>-79m<sup>2</sup></small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>10. Number of people with a short education</td>
-		<td><small>10. Percent couples with children</small></td>
-		<td><small>10. Percentage of houses larger than m<sup>2</sup></small></td>
+		<td><small>10. Percent houses larger than 120m<sup>2</sup></td>
+		<td><small>10. Percent with a medium long education</small></td>
+		<td><small>10. Percent net newcomers</small></td>
 
 	  </tr>
 	</table>
-</article>
 
+</article>
+	<h2>
+	Conclusin for regression
+	</h2>
+	<p>
+	Both of the regression methods performed well. Their predictions errors are generally low of around 5%. Even lower if elastic net is used for the individual years and random forest for all the years combined.
+	The most important features make a lot of sense and is a good guideline for you, if you want to look for your ideal district!
+	</p>
 <article>
 	<h2>Clustering</h2>
-		<div class="article-info">Social Data & Visualization 2017</div>
+		<div class="article-info">K-means</div>
 			<div class="text-container">
 				<p>
-					Now you might have decided on the district that is just right for you! But what if you want to try something new at some point? Fear not! Using a Kmeans algortihm with 4 clusters.
-					We have made a map where each cluster is colored in a different color. The Kmeans algortihm is ran on the features:
+					Now you might have decided on the district that is just right for you! But what if you want to try something new at some point? Fear not! Using a K-means algortihm with 4 clusters.
+					We have made a map where each cluster is colored in a different color. The K-means algortihm is run on the features:
 				</p>
-				<ol>
-				<li>'pct_lav_indkomst',</li>
-				'pct_middel_indkomst','pct_hoj_indkomst','pct_dansk','antal_boliger','antal_beboere',
-                 'bolig_pct_over_120_m2','alder_pct_over_65'
-				 </ol>
+				<ul>
+				<li>Percent with low income</li>
+				<li>Percent with medium income</li>
+				<li>Percent with high income</li>
+				<li>Percent danes</li>
+				<li>Number of homes</li>
+				<li>Number of inhabitants</li>
+				<li>Homes above 120 m<sup>2</sup></li>
+				<li>Percent people above 65 years</li>
+				 </ul>
+				 <p>
+				 The data was standarized before running the algorithm, since some of the numbers are a lot higher than others, and would just dominate otherwise.
+				 The result can be seen for each year by using the slider. This way you can see if your new favourite district tend to change cluster over the years and should be avoided.
+				 A cluster might change color over the years. But this is simply due to the nature of K-means! Do not worry!
+				 </p>
+				 <p>
+				 Enjoy! And happy hunting for a similar district!
+				 </p>
 			</div>
 			<div class="viz-container-2 container"></div>
 			<div class="viz-container-1 container"></div>

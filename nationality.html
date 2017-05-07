@@ -540,9 +540,9 @@ d3.select('.showForeign').on('click', function(){
 });
 
 function plotDanes(selectValueDistrict){
-	d3.csv('KBH_Stats.csv', function(error, rawdata) {	
+	d3.csv('KBH_Stats1.csv', function(error, rawdata) {	
 		if (error) throw error;
-
+console.log(rawdata)
 		selectValueCountry = 'Danmark'
 		selectValueDistrict = d3.select('.District').property('value')
 
@@ -565,26 +565,21 @@ function plotDanes(selectValueDistrict){
        	}));
 
 
-minDomain = d3.min([
-				        	d3.min(data, function(d) { 
-				            	return Math.max(d.Total);
-				        	}),
-				        	d3.min(data2, function(d) { 
-				            	return Math.max(d.Total);
-				        	})
-						]);
-maxDomain = d3.max([
-				        	d3.max(data, function(d) { 
-				            	return Math.max(d.Total);
-				        	}),
-				        	d3.max(data2, function(d) { 
-				            	return Math.max(d.Total);
-				        	})
-						]);
-
+minDomain = d3.min(data, function(d) { 
+            	return Math.max(d.Total);
+        	});
+minDomain2 = d3.min(data2, function(d) { 
+            	return Math.max(d.Total);
+        	});
+maxDomain = d3.max(data, function(d) { 
+				return Math.max(d.Total);
+			});
+maxDomain2 = d3.max(data2, function(d) { 
+				return Math.max(d.Total);
+			});
 
         y.domain([minDomain,maxDomain]);
-        y1.domain([minDomain,maxDomain]);
+        y1.domain([minDomain2,maxDomain2]);
 
         var svg = d3.select("body").transition();
         danes = true;
