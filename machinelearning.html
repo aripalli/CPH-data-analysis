@@ -141,6 +141,8 @@ License: Creative Commons Attribution
 		<td>4.65% &plusmn 3.49%</td> 
 	  </tr>
 	</table>
+		<p>
+		</p>
 			<p>
 			The table suggests that we can actually predict the output quite well with most errors being around 5%. It should also be noted how the error is around half of the others, when all the data is used.
 			This makes sense as random forest methods often perform better the more data they have available. The conclusion is that by looking at other features in the data, we can tell a lot about the 3
@@ -221,6 +223,8 @@ License: Creative Commons Attribution
 
 	  </tr>
 	</table>
+	<p>
+	</p>
 			<p>
 			A lot of the features in top 10 probably make good sense. However some might be surprising. It  for instance seem really important to look at the age distribution if you want to find out
 			how many danes there are in a district. This suggests that foreigners in Denmark are found in specific age groups. Number 2 feature here is singles without children. This also makes good sense
@@ -231,7 +235,6 @@ License: Creative Commons Attribution
 <article>
 	<h2>Elastic net</h2>
 		<div class="article-info">Regression</div>
-		<div class="text-container">
 			<p>
 			The same analysis is done with an elastic net. The errors here are also presented together with a 95% prediction interval.
 			</p>
@@ -288,7 +291,9 @@ License: Creative Commons Attribution
 		<td>3.87% &plusmn 2.45%</td> 
 	  </tr>
 	</table>
-		</div>
+		<p>
+		</p>
+		
 			<p>
 			Here the errors actually increase when the data from all years are used. And it is actually quite low when looking at individual years. Except for 2008.
 			Normally random forest outperforms elastic net. However when there is a lot of features compared to the data, which is the case when only one year is analysed, then elastic net shines
