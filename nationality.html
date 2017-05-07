@@ -68,6 +68,7 @@ License: Creative Commons Attribution
 			        <option value="1">Data with districts</option>
 				</select>
 				<select class="District select-style"></select>
+				<a href="#" class="button showDanes">See distribution of Danes</a>
 				</div>
 
 				<div class="viz-container"></div>
@@ -116,11 +117,10 @@ path {
 <script>
 var colours = colorbrewer.BrBG[11]
 // Set the dimensions of the canvas / graph
-var margin = {top: 50, right: 80, bottom: 80, left: 60},
+var margin = {top: 50, right: 80, bottom: 80, left: 70},
     width = 700- margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
     var padding = 3;
-
 // _______________BAR MAKING FKN BARS_________________//
 // 
 // 
@@ -281,7 +281,7 @@ var yAxisLeft = d3.svg.axis().scale(y)
 var yAxisRight = d3.svg.axis().scale(y1)
     .orient("right").ticks(5); 
 
-var secVar = "Total"
+var danes = false;
 
 // Define the line
 var valueline = d3.svg.line()
@@ -290,20 +290,32 @@ var valueline = d3.svg.line()
 
 var valueline2 = d3.svg.line()
     .x(function(d) { return x(d.AAR); })
-    .y(function(d) { return y1(d.Percentage)});
+    .y(function(d) { 
+    	console.log(d)
+    	console.log(danes)
+
+    	if (danes) {
+			return y1(d.Total)	
+    	} else {
+    		return y1(d.Percentage)	
+    	}
+
+    });
 
 svg.append("text")
 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
 .attr("transform", "translate("+ (width/2) +","+(height+margin.bottom - 15)+")")  // centre below axis
 .text("Year");
 
-svg.append("text")
+var ylabel1 = svg.append("text")
+.attr("class","ylabel1")
 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-.attr("transform", "translate("+ (-40) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+.attr("transform", "translate("+ (-50) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
 .style("fill",colours[10])
 .text("Number of citizens from nation");
 
-svg.append("text")
+var ylabel2 = svg.append("text")
+.attr("class","ylabel2")
 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
 .attr("transform", "translate("+  (width +50) +","+(height/2) +")rotate(90)")  // text is drawn off the screen top left, move down and out and rotate
 .style("fill",colours[2])
@@ -353,6 +365,7 @@ d3.csv("KBH_Stats_noDanes_noBydel_1.csv", function(error, data) {
     .attr("d", valueline(data));
 
     // Add the valueline path.
+    danes=false;
     svg.append("path")
     .attr("class", "line2")
     .style("stroke", colours[2])
@@ -379,10 +392,6 @@ d3.csv("KBH_Stats_noDanes_noBydel_1.csv", function(error, data) {
     myTextTitle.data(data).text(function(d) { 
 			return d.COUNTRY
 		});
-
-
-
-
 });
 
 // Get the data
@@ -513,6 +522,7 @@ function theCreation(dataset,District)
 			svg.select(".line1")   // change the line
 	        	.duration(750)
 	            .attr("d", valueline(data));
+	        danes = false;
 	        svg.select(".line2")   // change the line
 	        	.duration(750)
 	            .attr("d", valueline2(data));
@@ -533,9 +543,110 @@ function theCreation(dataset,District)
 			    .transition().duration(1000/2)
 			    .style("opacity", 1)
 			    .text(function(d) { return d.COUNTRY });
+
+			ylabel1.transition().duration(1000/2)
+			    .style("opacity", 0)
+			    .transition().duration(1000/2)
+			    .style("opacity", 1)
+			    .text('Number of citizens from nation')
+
+			ylabel2.transition().duration(1000/2)
+			    .style("opacity", 0)
+			    .transition().duration(1000/2)
+			    .style("opacity", 1)
+			    .text('Percentage of total foreigners')
 		}
 
 	});
+
+d3.select(".showDanes").on('mouseover',function(){
+	
+	plotDanes('Indre By')
+});
+d3.select(".showDanes").on('mouseout',function(){
+	console.log('jazz')
+	console.log(dataset)
+	theCreation(dataset,0)
+});
+
+function plotDanes(selectValueDistrict){
+	d3.csv('KBH_Stats.csv', function(error, rawdata) {	
+		if (error) throw error;
+
+selectValueCountry = 'Danmark'
+selectValueDistrict = "Indre By"
+District = 1;
+		console.log(selectValueDistrict)
+		console.log(data)
+        // Filter the data
+	        data = rawdata.filter(function(row)
+	        {
+	        	return (row['COUNTRY'] == 'Danmark' && row['DISTRICT'] == selectValueDistrict);
+	        });
+	     	data2 = rawdata.filter(function(row)
+	        {
+	        	return (row['COUNTRY'] == 'Foreign Nations' && row['DISTRICT'] == selectValueDistrict);
+	        });
+
+        console.log(data2)
+
+        // Scale the range of the data
+        x.domain(d3.extent(data, function(d) 
+       	{
+       		return d.AAR 
+       	}));
+
+        y.domain([30000, d3.max(data, function(d) 
+        { 
+            return Math.max(d.Total);
+        })]);
+
+        y1.domain([30000, d3.max(data2, function(d) 
+        { return Math.max(d.Total);
+        })]);
+
+        var svg = d3.select("body").transition();
+        danes = true;
+
+
+		svg.select(".line1")   // change the line
+        	.duration(750)
+            .attr("d", valueline(data,true));
+        svg.select(".line2")   // change the line
+        	.duration(750)
+            .attr("d", valueline2(data2));
+
+        svg.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(xAxis);
+        svg.select(".yRight.axis") // change the y axis
+            .duration(750)
+            .call(yAxisRight);
+        svg.select(".yLeft.axis") // change the y axis
+            .duration(750)
+            .call(yAxisLeft);
+
+        myTextTitle.data(data)
+		    .transition().duration(1000/2)
+		    .style("opacity", 0)
+		    .transition().duration(1000/2)
+		    .style("opacity", 1)
+		    .text('Danes and foreigners')
+
+		ylabel1.transition().duration(1000/2)
+		    .style("opacity", 0)
+		    .transition().duration(1000/2)
+		    .style("opacity", 1)
+		    .text('Number of Danes')
+
+		ylabel2.transition().duration(1000/2)
+		    .style("opacity", 0)
+		    .transition().duration(1000/2)
+		    .style("opacity", 1)
+		    .text('Number of foreigners')
+
+	});
+}
 
 $( function() {
 
