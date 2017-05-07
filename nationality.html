@@ -564,14 +564,27 @@ function plotDanes(selectValueDistrict){
        		return d.AAR 
        	}));
 
-        y.domain([30000, d3.max(data, function(d) 
-        { 
-            return Math.max(d.Total);
-        })]);
 
-        y1.domain([30000, d3.max(data2, function(d) 
-        { return Math.max(d.Total);
-        })]);
+minDomain = d3.min([
+				        	d3.min(data, function(d) { 
+				            	return Math.max(d.Total);
+				        	}),
+				        	d3.min(data2, function(d) { 
+				            	return Math.max(d.Total);
+				        	})
+						]);
+maxDomain = d3.max([
+				        	d3.max(data, function(d) { 
+				            	return Math.max(d.Total);
+				        	}),
+				        	d3.max(data2, function(d) { 
+				            	return Math.max(d.Total);
+				        	})
+						]);
+
+
+        y.domain([minDomain,maxDomain]);
+        y1.domain([minDomain,maxDomain]);
 
         var svg = d3.select("body").transition();
         danes = true;
