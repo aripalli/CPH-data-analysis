@@ -4,7 +4,7 @@
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
 <link rel="stylesheet" href="styles.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=23" type="text/css" />
+<link rel="stylesheet" href="svg-styles.css?version=24" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -38,14 +38,13 @@ License: Creative Commons Attribution
                 <li><a href="nationality.html">Nationality distribution</a></li>
 	           		<li><a href="pred.html">Interactive map</a></li>
 	           		<li><a href="machinelearning.html">Machine Learning</a></li>
-	            	<li><a href="#">Ipython notebook</a></li>
-	            	<li><a href="#">Contact</a></li>
+	            	<li><a href="ipython.html">Ipython notebook</a></li>
 		</ul>
 	</nav>
 </aside>
 		
 <section id="content" class="column-right">  		
-	<article>			
+	<article>			<div class="inside-article">				
 	<h2>Machine Learning</h2>
 
 		<div class="text-container">
@@ -63,7 +62,8 @@ License: Creative Commons Attribution
 		<p>
 		The predicts will be made both with an elastic net method and a random forest regression method. The elastic net is a linear method while the random forest is not. Both methods will be used and compared.
 		For both methods the <i>root mean square error (RMSE)</i> will be given as an estimate of the error.</p>
-		<img src="RMSE.JPG" alt="RMSE" style="width:200px;height:75px;">
+		<div style="  width: 50%;
+  margin: 0 auto;"><img src="RMSE.JPG" alt="RMSE" style="width:300px;height:100%;"></div>
 
 		<p>
 		Furthermore the features that the methods deem most important will be investigated.
@@ -74,10 +74,10 @@ License: Creative Commons Attribution
 		</p>
 
 
-	
+	</div>
 	</article>
 	
-	<article>
+	<article><div class="inside-article">				
 	<h2>Random Forest</h2>
 		<div class="article-info">Regression</div>
 
@@ -89,13 +89,13 @@ License: Creative Commons Attribution
 		<p>
 		The method was used both using data only for a given year but also when all the data from all years is used. The error of the predictions is presented together with a 95% prediction interval
 		</p>
-	<table style="width:80%">
+	<table style="width:100%" class="table1">
 	  <tr>
 	  <col width="100">
 		<th>Year</th>
-		<th>High income prediction - RMSE</th>
-		<th>Percent danes in a rode prediction - RMSE</th>
-		<th>Above 65 years prediction - RMSE</th>
+		<th>High income <br>prediction - RMSE</th>
+		<th>Percent danes <br>in a rode prediction - RMSE</th>
+		<th>Above 65 years <br>prediction - RMSE</th>
 
 	  </tr>
 	  <tr>
@@ -230,22 +230,23 @@ License: Creative Commons Attribution
 			how many danes there are in a district. This suggests that foreigners in Denmark are found in specific age groups. Number 2 feature here is singles without children. This also makes good sense
 			since refugees fleeing from a war often bring all of their family.
 			</p>
+			</div>
 	</article>
 
-<article>
+<article><div class="inside-article">				
 	<h2>Elastic net</h2>
 		<div class="article-info">Regression</div>
 			<p>
 			The same analysis is done with an elastic net. The errors here are also presented together with a 95% prediction interval.
 			</p>
-	<table style="width:80%">
+	<table style="width:100%" class="table1">
 	
 	  <tr>
 	  <col width="100">
 		<th>Year</th>
-		<th>High income prediction - RMSE</th>
-		<th>Percent danes in a rode prediction - RMSE</th>
-		<th>Above 65 years prediction - RMSE</th>
+		<th>High income <br>prediction - RMSE</th>
+		<th>Percent danes in <br>a rode prediction - RMSE</th>
+		<th>Above 65 years <br>prediction - RMSE</th>
 
 	  </tr>
 	  <tr>
@@ -370,8 +371,8 @@ License: Creative Commons Attribution
 
 	  </tr>
 	</table>
-
-</article>
+</div>
+</article><div class="inside-article">				
 	<h2>
 	Conclusin for regression
 	</h2>
@@ -421,6 +422,7 @@ License: Creative Commons Attribution
 					<div id="slider-range-max"></div>
 				<div>
 			</div>
+		</div>
 </article>
 	
 	<footer class="clear">

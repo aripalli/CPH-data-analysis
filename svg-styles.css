@@ -210,3 +210,11 @@ g.tick text {
 .select-style select:focus {
     outline: none;
 }
+
+.table1 td {
+    text-align: right;
+    
+} 
+th{
+    text-align: center;
+}
