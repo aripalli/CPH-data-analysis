@@ -80,6 +80,12 @@ a.button-reversed:hover {
 	background-color: #222;
 }
 
+a.button-small {
+    border-radius: 3px;
+	padding: 4px 11px;
+	font-size: 0.5em;
+}
+
 button { 
     background-color: #6296B4;
     border-radius: 5px;

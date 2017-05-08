@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="styles.css?version=1" type="text/css" />
 <link rel="stylesheet" href="svg-styles.css?version=23" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -82,9 +82,28 @@ License: Creative Commons Attribution
 		</article>
     <article>
           <h2>Example outliers</h2>
-    <div class="article-info">Not the 10.000 hour rule
-</div>
-<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9238.751795244722!2d12.560001299520938!3d55.700185366375614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sdk!4v1494229758473" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <div class="article-info Egmonts">Not the 10.000 hour rule</div>
+    Some noteworthy areas to be found in the map and some guesses on why the statistics show these results.
+
+<div><h3>Egmonts </h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d116">Click to see Egmonts on the map</a></div>
+<p>
+<iframe style="float:right" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9238.751795244722!2d12.560001299520938!3d55.700185366375614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sdk!4v1494229758473" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+If you slide the timeline slider from 2008 to 2013 we can notice that some areas are always red/orange. One of them is Egmonts. The initial thought was it has probably a low percentage of danes living in this area. However we can see there is about 89% danes living in this area. But as seen from the stacked age bar there are only people in age of 18 - 29 living there. That is interesting! If we go to google maps here below we see that the only homes to be found in this area are college campuses (d. kolllegi). That explaines the low percentage of wealthy people in that area.</p>
+
+
+<div><h3>Nørre Alles</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d115">Click to see Egmonts on the map</a></div>
+<p>
+
+some text here about egmontsfsadfas vaerg argamrkgælaergml  garg adrklg  egklrg ars jgklarg jlkaerg aelkrgj aekglæj ardsgjkladr gjklaeærg jlkæegvj aeiobr jearoipb jeaoipb ajebiopa jrbioaj erboi eabpioaej bpioae </p>
+
+
+<div><h3>Gavlhus</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d267">Click to see Egmonts on the map</a></div>
+<p>
+
+some text here about egmontsfsadfas vaerg argamrkgælaergml  garg adrklg  egklrg ars jgklarg jlkaerg aelkrgj aekglæj ardsgjkladr gjklaeærg jlkæegvj aeiobr jearoipb jeaoipb ajebiopa jrbioaj erboi eabpioaej bpioae </p>
+
+
+
 
     </article>
 		<footer class="clear">
@@ -540,6 +559,18 @@ d3.select('.High_inc').on('click', function(){
   editMap(mapG,year,objective)
 });
 
+// /CLICK EXAMPLE BUTTONS
+d3.selectAll('.exampledistrict').on('click',function() {
+    clicked()
+    mapG.selectAll("path").classed("active",false);
+    distId = d3.select(this).attr('id');
+    theID = 'a'+distId.slice(1)
+    theD = d3.select('#'+theID)
+    theD.attr("class","active")
+    $('html,body').animate({
+        scrollTop: $("#chart1").offset().top},
+        'slow');
+});
 
 
 
@@ -558,13 +589,15 @@ function createMap() {
       .on('mouseout', tip.hide)
       .on("click", function(d,i){
      		rodeId = d3.select(this).attr("id")
+        rodeId = rodeId.slice(1)
+        console.log(d)
      		globalRodeId = rodeId;
             // editBar(rodeId);
             clicked(d,rodeId)
          })
      .attr('class','map-district')
      .attr('id', function(d){
-     		return d.properties.rode_nr
+     		return 'a'+d.properties.rode_nr
      })
      .style("fill", function(d) {
      		//Get data value
