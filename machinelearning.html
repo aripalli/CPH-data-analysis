@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles/styles.css" type="text/css" />
-<link rel="stylesheet" href="styles/svg-styles.css?version=24" type="text/css" />
+<link rel="stylesheet" href="styles/styles.css?version=1" type="text/css" />
+<link rel="stylesheet" href="styles/svg-styles.css?version=25" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -505,8 +505,8 @@ var tip = d3.tip()
 	  	return 	"<div  class='tiphead' ><strong>"+ d['properties']['rodenavn'] +"</strong></div>" + 
 	    		"<div><strong>Number of homes:</strong> <span class='tipperCol' >" + d['properties'][year]['Num_house'] + "</span></div>" +
           "<div><strong>Number of inhabitants:</strong> <span class='tipperCol' >" + d['properties'][year]['Num_people'] + "</span></div>" +
-          "<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties'][year]['High_inc'] + "</span></div>" +
-          "<div><strong>% of danes:</strong> <span class='tipperCol' >" + d['properties'][year]['Pct_danes'] + "</span></div>" ;
+          "<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties'][year]['High_inc'] + "%</span></div>" +
+          "<div><strong>% of danes:</strong> <span class='tipperCol' >" + d['properties'][year]['Pct_danes'] + "%</span></div>" ;
 	  });
 svg.call(tip);
 //-----------------//

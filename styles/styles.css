@@ -43,7 +43,7 @@ blockquote p {
 	height: 1%;
 }
 p {
-	line-height:2.0em;
+	line-height:1.4em;
 	margin-bottom:20px;
 }
 a {
@@ -277,7 +277,7 @@ nav#mainnav li a {
 article {
     padding: 10px 10px 30px;
 	font-size: 1.2em;
-border-bottom: 1px solid #eee;
+	border-bottom: 1px solid #eee;
  }
 
  .inside-article{
