@@ -274,6 +274,11 @@ article {
 border-bottom: 1px solid #eee;
  }
 
+ .inside-article{
+	  width: 70%;
+	  margin: 0 auto;
+}
+
 article h2 {
     padding-bottom: 0;
 	line-height: 1.1em;
