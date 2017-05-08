@@ -87,20 +87,19 @@ License: Creative Commons Attribution
 
 <div><h3>Egmonts </h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d116">Click to see Egmonts on the map</a></div>
 <p>
-<iframe style="float:right" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9238.751795244722!2d12.560001299520938!3d55.700185366375614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sdk!4v1494229758473" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-If you slide the timeline slider from 2008 to 2013 we can notice that some areas are always red/orange. One of them is Egmonts. The initial thought was it has probably a low percentage of danes living in this area. However we can see there is about 89% danes living in this area. But as seen from the stacked age bar there are only people in age of 18 - 29 living there. That is interesting! If we go to google maps here below we see that the only homes to be found in this area are college campuses (d. kolllegi). That explaines the low percentage of wealthy people in that area.</p>
+<iframe style="float:right" src="https://www.google.com/maps/d/embed?mid=1tLv9DplwKxtYXd5mFgub7V5JEZo" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+If you slide the timeline slider from 2008 to 2013 we can notice that some areas are always red/orange. One of them is Egmonts. The initial thought was it has probably a low percentage of danes living in this area. However we can see there is about 89% danes living in this area. But as seen from the stacked age bar there are only people in age of 18 - 29 living there. That is interesting! If we go to google maps here below we see that the only homes to be found in this area are college campuses dorms. That explaines the low percentage of wealthy people in that area.</p>
 
 
-<div><h3>Nørre Alles</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d115">Click to see Egmonts on the map</a></div>
+<div><h3>Nørre Alles</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d115">Click to see Nørre Alles on the map</a></div>
 <p>
+The same can be seen for the area Nørre Alles, which is next Egmonts. It is has low percentage of wealthy residents, however there are no dorms there. But if you click the area you can notice how the age distribution is. Large portion of the people are above 65 years old. If we look closer into this area we have found out that there is a home for the elderly, <a href="https://en.wikipedia.org/wiki/De_Gamles_By">De Gamles By</a>, occupying the area. We also notice from the bar above that the majority of the people in Nørre Alles have medium income compared to the college dorm which consistent mostly of low income. A similiar area as Nørre Alles is with older home is <a style="cursor:pointer" class="exampledistrict" id="d372">Sundparken (click to see on map)</a>.
 
-some text here about egmontsfsadfas vaerg argamrkgælaergml  garg adrklg  egklrg ars jgklarg jlkaerg aelkrgj aekglæj ardsgjkladr gjklaeærg jlkæegvj aeiobr jearoipb jeaoipb ajebiopa jrbioaj erboi eabpioaej bpioae </p>
-
-
-<div><h3>Gavlhus</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d267">Click to see Egmonts on the map</a></div>
+</p>
+<div><h3>Gavlhus</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d267">Click to see Gavlhus on the map</a></div>
 <p>
-
-some text here about egmontsfsadfas vaerg argamrkgælaergml  garg adrklg  egklrg ars jgklarg jlkaerg aelkrgj aekglæj ardsgjkladr gjklaeærg jlkæegvj aeiobr jearoipb jeaoipb ajebiopa jrbioaj erboi eabpioaej bpioae </p>
+Other areas that stay with low percentage of high income residents over all years include Gavlhus and Tingbjergs. Tingbjergs is next to Gavlhus. There we can see, if you click, that the age distribution is not abnormal as the areas metnioned above. However, if you hover over the district or click the "Precentage of Danes button" you find out that this area has almost 75% foreigners living there. Is that perhaps the reason?
+</p>
 
 
 
@@ -546,6 +545,8 @@ function clicked(d,rodeId) {
 var objective = 'High_inc'
 
 d3.select('.Pct_danes').on('click', function(){
+  d3.select(this).classed("button-reversed",true)
+  d3.select('.High_inc').classed("button-reversed",false)
   d3.select('.caption').text('% of Danes')
   objective = 'Pct_danes'
   year = d3.select('#amount').property("value")
@@ -553,6 +554,8 @@ d3.select('.Pct_danes').on('click', function(){
 });
 
 d3.select('.High_inc').on('click', function(){
+  d3.select(this).classed("button-reversed",true)
+  d3.select('.Pct_danes').classed("button-reversed",false)
   d3.select('.caption').text('% of high income')
   objective = 'High_inc'
   year = d3.select('#amount').property("value")
