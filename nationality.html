@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=14" type="text/css" />
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+<link rel="stylesheet" href="styles/svg-styles.css?version=14" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -12,7 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
-<script src="colorbrewer.min.js"></script>
+<script src="d3/colorbrewer.min.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -223,7 +223,7 @@ var myTextTitleBar = svgBars.append('text')
 		.attr("transform", "translate("+  -10 +","+ -10 +")")
 		.text("Top 25 nationalities in CPH in 2015");
 
-d3.csv("KBH_Top25_AllYears.csv",function(error, rawdata) {
+d3.csv("d3-data/KBH_Top25_AllYears.csv",function(error, rawdata) {
 	year = 2015 
 	
 	data = rawdata.filter(function(row) {
@@ -283,7 +283,7 @@ d3.csv("KBH_Top25_AllYears.csv",function(error, rawdata) {
       });
   });
 function editBars(year) {
-	d3.csv("KBH_Top25_AllYears.csv",function(error, rawdata) {
+	d3.csv("d3-data/KBH_Top25_AllYears.csv",function(error, rawdata) {
 	    
 		
 		data = rawdata.filter(function(row) {
@@ -393,7 +393,7 @@ var myTextTitle = svg.append('text')
 		.attr("transform", "translate("+  -10 +","+ -10 +")");
 
 
-d3.csv("KBH_Stats_noDanes.csv", function(error, data) {
+d3.csv("d3-data/KBH_Stats_noDanes.csv", function(error, data) {
  	if (error) throw error;
 
 	selectValueCountry = "";
@@ -498,7 +498,7 @@ d3.csv("KBH_Stats_noDanes.csv", function(error, data) {
 });
 
 function plot(selectValueCountry,selectValueDistrict){
-	d3.csv("KBH_Stats_noDanes.csv", function(error, data) {
+	d3.csv("d3-data/KBH_Stats_noDanes.csv", function(error, data) {
 	    data.forEach(function(d) {
 	        d.AAR = +d.AAR;
 	        d.STATKODE = +d.STATKODE;
@@ -600,9 +600,8 @@ d3.select('.showForeign').on('click', function(){
 });
 
 function plotDanes(selectValueDistrict){
-	d3.csv('KBH_Stats1.csv', function(error, rawdata) {	
+	d3.csv('d3-data/KBH_Stats.csv', function(error, rawdata) {	
 		if (error) throw error;
-console.log(rawdata)
 		selectValueCountry = 'Danmark'
 		selectValueDistrict = d3.select('.District').property('value')
 
