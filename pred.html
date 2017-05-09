@@ -58,9 +58,7 @@ License: Creative Commons Attribution
 				<li>The buttons on top colors the districts based on percent danes or percent with high income</li>
 				<li>Hover over a district to get some basic information about it</li>
 				</ul>
-				<p>
-				The preprocessed data for this page can be found <a href="https://github.com/aripalli/CPH-data-analysis/blob/master/d3-data/geodata.geojson">here for the map</a> and <a href="https://github.com/aripalli/CPH-data-analysis/blob/master/d3-data/bardata.json">here for the bars</a>
-				</p>
+
       <a  class="button Pct_danes" style="cursor:pointer">Percentage of Danes</a>
       <a  class="button button-reversed High_inc" style="cursor:pointer">Percentage of high income</a>
 			<div class="viz-container-2 container"></div>
@@ -78,27 +76,39 @@ License: Creative Commons Attribution
 					<div id="slider-range-max"></div>
 				<div>
 			</div>
-		
+			<br>
+			<p>
+				The preprocessed data for this page can be found <a href="https://github.com/aripalli/CPH-data-analysis/blob/master/d3-data/geodata.geojson">here for the map</a> and <a href="https://github.com/aripalli/CPH-data-analysis/blob/master/d3-data/bardata.json">here for the bars</a>
+				</p>
 		</article>
     <article>
-          <h2>Example outliers</h2>
+          <h2>Interesting roder (districts)</h2>
     <div class="article-info Egmonts">Not the 10.000 hour rule</div>
-    Some noteworthy areas to be found in the map and some guesses on why the statistics show these results.
-
+	<p>
+    Below are some noteworthy areas found in the map and some guesses on why the statistics look like they do.
+	</p>
 <div><h3>Egmonts </h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d116">Click to see Egmonts on the map</a></div>
 <p>
 <iframe style="float:right" src="https://www.google.com/maps/d/embed?mid=1tLv9DplwKxtYXd5mFgub7V5JEZo" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-If you slide the timeline slider from 2008 to 2013 we can notice that some areas are always red/orange. One of them is Egmonts. The initial thought was it has probably a low percentage of danes living in this area. However we can see there is about 89% danes living in this area. But as seen from the stacked age bar there are only people in age of 18 - 29 living there. That is interesting! If we go to google maps here below we see that the only homes to be found in this area are college campuses dorms. That explaines the low percentage of wealthy people in that area.</p>
+If you move the timeline slider from 2008 to 2013 it can be seen that some areas are always red/orange. One of them is Egmonts. The initial thought was it has probably a low percentage of danes living in this area.
+ However we can see there is about 89% danes living in this area. But as seen from the stacked age bar there are almost only people of 18 - 29 years living there.
+ That is interesting! If we go to the google maps to the right we see that the only homes to be found in this area are college campus dorms. That explaines the low percentage of wealthy people in that area,
+ since all of them are students.</p>
 
 
 <div><h3>Nørre Alles</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d115">Click to see Nørre Alles on the map</a></div>
 <p>
-The same can be seen for the area Nørre Alles, which is next Egmonts. It is has low percentage of wealthy residents, however there are no dorms there. But if you click the area you can notice how the age distribution is. Large portion of the people are above 65 years old. If we look closer into this area we have found out that there is a home for the elderly, <a href="https://en.wikipedia.org/wiki/De_Gamles_By">De Gamles By</a>, occupying the area. We also notice from the bar above that the majority of the people in Nørre Alles have medium income compared to the college dorm which consistent mostly of low income. A similiar area as Nørre Alles is with older home is <a style="cursor:pointer" class="exampledistrict" id="d372">Sundparken (click to see on map)</a>.
+The same can be seen for the area Nørre Alles, which is next to Egmonts. It has a low percentage of wealthy residents, however there are no dorms there.
+ But if you click on the area you can see the age distribution. A large portion of the people are above 65 years old. If we look closer into this area we have found out that there is a home for the elderly,
+ <a href="https://en.wikipedia.org/wiki/De_Gamles_By">De Gamles By</a>, occupying the area. We also notice from the income bar that the majority of the people in Nørre Alles have medium income compared to the college
+ dorm which consisted mostly of low income people. A similiar area with an elder home is <a style="cursor:pointer" class="exampledistrict" id="d372">Sundparken (click to see on map)</a>.
 
 </p>
 <div><h3>Gavlhus</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d267">Click to see Gavlhus on the map</a></div>
 <p>
-Other areas that stay with low percentage of high income residents over all years include Gavlhus and Tingbjergs. Tingbjergs is next to Gavlhus. There we can see, if you click, that the age distribution is not abnormal as the areas metnioned above. However, if you hover over the district or click the "Precentage of Danes button" you find out that this area has almost 75% foreigners living there. Is that perhaps the reason?
+Other areas that have low percentage of high income residents over all years include Gavlhus and Tingbjergs. 
+Tingbjergs is next to Gavlhus. If you click on one of these distrtics, you can see that the age distribution is not abnormal as the areas metnioned above. 
+However if you hover over the district or click the "Precentage of Danes button" you find out that this area has almost 75% foreigners living there. Is that perhaps the reason?
 </p>
 
 
