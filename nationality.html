@@ -100,8 +100,6 @@ License: Creative Commons Attribution
 				The figure below shows Icelandic people moving from and to Iceland through the years. We see that around 1992 there were many Icelanders that moved away from Iceland because of the financial crisis.
 				We also notice that after the financial crisis in 2008, many Icelanders moved away but apparently not to Copenhagen. 
 
-
-                <!-- http://www.mbl.is/vidskipti/frettir/2015/03/30/tuttugu_kreppur_a_150_arum/ -->
 				</p>
 
 				<p>
@@ -185,6 +183,10 @@ a {
 	cursor: pointer;
 }
 
+.ylabel1, .ylabel2 {
+	font-size: 15px
+}
+
 
 </style>
 
@@ -196,6 +198,7 @@ datesa = new Date();
 $("#im1").attr("src", "figures/Iceland_stats.JPG?"+datesa.getTime());
 $("#im2").attr("src", "figures/Icelanders_Denmark.JPG??"+datesa.getTime());
 $("#im3").attr("src", "figures/TurksDenmark.JPG?"+datesa.getTime());
+
 //
 ///////////
 
@@ -203,6 +206,7 @@ $("#im3").attr("src", "figures/TurksDenmark.JPG?"+datesa.getTime());
 
 $('.showForeign').hide();
 var colours = colorbrewer.BrBG[11]
+console.log(colours)
 // Set the dimensions of the canvas / graph
 var margin = {top: 50, right: 80, bottom: 80, left: 70},
     width = 700- margin.left - margin.right,
@@ -395,7 +399,7 @@ var ylabel1 = svg.append("text")
 .attr("class","ylabel1")
 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
 .attr("transform", "translate("+ (-50) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-.style("fill",colours[10])
+.style("fill",colours[8])
 .text("Number of citizens from nation");
 
 var ylabel2 = svg.append("text")
@@ -503,7 +507,7 @@ d3.csv("d3-data/KBH_Stats_noDanes.csv", function(error, data) {
     // Add the Y Axis
      svg.append("g")
     .attr("class", "yLeft axis")
-    .style("fill", colours[10])
+    .style("fill", colours[8])
     .call(yAxisLeft);
 
     svg.append("g")             
