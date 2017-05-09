@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=24" type="text/css" />
+<link rel="stylesheet" href="styles/styles.css?version=1" type="text/css" />
+<link rel="stylesheet" href="styles/svg-styles.css?version=25" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
-<script src="colorbrewer.min.js"></script>
+<script src="d3/colorbrewer.min.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -60,14 +60,15 @@ License: Creative Commons Attribution
 		<li>Predict how many danes live in a given rode.</li>
 		</ol>
 		<p>
-		The predicts will be made both with an elastic net method and a random forest regression method. The elastic net is a linear method while the random forest is not. Both methods will be used and compared.
-		For both methods the <i>root mean square error (RMSE)</i> will be given as an estimate of the error.</p>
+		The predictions will be made both with an elastic net method and a random forest regression method. The elastic net is a linear method while the random forest is non linear. Both methods will be used and compared.
+		For both methods the <i>root mean square error (RMSE)</i> will be given as an estimate of the error. This measure of error is good, since it provides an estimate of how far from the true value the predictions are,
+		on the same scale as the predictions.</p>
 		<div style="  width: 50%;
-  margin: 0 auto;"><img src="RMSE.JPG" alt="RMSE" style="width:300px;height:100%;"></div>
+  margin: 0 auto;"><img src="figures/RMSE.JPG" alt="RMSE" style="width:300px;height:100%;"></div>
 
 		<p>
 		Furthermore the features that the methods deem most important will be investigated.
-		This will serve as a guideline if you for instance want to find a district with a lot of wealthy people, then you woold know what other features to look for.
+		This will serve as a guideline if you for instance want to find a district with a lot of wealthy people, then you would know what other features to look for.
 		</p>
 		<p>
 		By looking carefully at the results below, you will be off to the district of your dreams in no time!
@@ -87,7 +88,7 @@ License: Creative Commons Attribution
 			</p>
 		
 		<p>
-		The method was used both using data only for a given year but also when all the data from all years is used. The error of the predictions is presented together with a 95% prediction interval
+		The method was used both using data only for a given year but also when all the data from all years is used. The error of the predictions is presented together with a 95% prediction interval.
 		</p>
 	<table style="width:100%" class="table1">
 	  <tr>
@@ -146,7 +147,7 @@ License: Creative Commons Attribution
 			<p>
 			The table suggests that we can actually predict the output quite well with most errors being around 5%. It should also be noted how the error is around half of the others, when all the data is used.
 			This makes sense as random forest methods often perform better the more data they have available. The conclusion is that by looking at other features in the data, we can tell a lot about the 3
-			features we want to predict.
+			features we want to predict with a low error.
 			
 			</p>
 			<p>
@@ -158,12 +159,13 @@ License: Creative Commons Attribution
 			</p>
 	<table style="width:100%">
 	  <tr>
-		<th>Predicting amount of people with high income</th>
+		<th>Predicting amount of people <br> with high income</th>
 		<th>Predicting amount of danes</th>
-		<th>Predicting amount of people above 65 years </th>
+		<th>Predicting amount of people <br>above 65 years </th>
 	  </tr>
 	  <tr>
-		<td><small>1. Percent houses larger than m<sup>2</sup></small> </td>
+
+		<td><small>1. Percent homes larger than 120 m<sup>2</sup></small> </td>
 		<td><small>1. Percent without an education </td>
 		<td><small>1. Percent with a medium income</small> </td>
 
@@ -201,7 +203,7 @@ License: Creative Commons Attribution
 	  <tr>
 		<td><small>7. Percent people with their own business </td>
 		<td><small>7. Percent with a job</small></td>
-		<td><small>7. Percent houses with size 60m<sup>2</sup>-79m<sup>2</sup></small></td>
+		<td><small>7. Percent homes with size 60m<sup>2</sup>-79m<sup>2</sup></small></td>
 
 	  </tr>
 	  	  <tr>
@@ -212,7 +214,7 @@ License: Creative Commons Attribution
 	  </tr>
 	  <tr>
 		<td><small>9. Percent people with no education</td>
-		<td><small>9. Average house area pr. person</small></td>
+		<td><small>9. Average home area pr. person</small></td>
 		<td><small>9. Percent homes build 1900-1929</small></td>
 
 	  </tr>
@@ -227,8 +229,8 @@ License: Creative Commons Attribution
 	</p>
 			<p>
 			A lot of the features in top 10 probably make good sense. However some might be surprising. It  for instance seem really important to look at the age distribution if you want to find out
-			how many danes there are in a district. This suggests that foreigners in Denmark are found in specific age groups. Number 2 feature here is singles without children. This also makes good sense
-			since refugees fleeing from a war often bring all of their family.
+			how many danes there are in a district. This suggests that foreigners in Denmark are found in specific age groups. Number 2 feature here is singles without children. This could also make sense
+			since refugees fleeing from a war might often bring all of their family.
 			</p>
 			</div>
 	</article>
@@ -302,13 +304,13 @@ License: Creative Commons Attribution
 			</p>
 			<p>
 			The top 10 features that elastic net deem most important are presented below. They are not identical to the ones that random forest found, but they tend to agree with most. Again a lot of the 
-			most important features make sense when you think about what you expectations might be.
+			most important features make sense when you think about what you would expect.
 			</p>
 	<table style="width:100%">
 	  <tr>
-		<th>Predicting amount of people with high income</th>
+		<th>Predicting amount of people<br> with high income</th>
 		<th>Predicting amount of danes</th>
-		<th>Predicting amount of people above 65 years </th>
+		<th>Predicting amount of people<br> above 65 years </th>
 	  </tr>
 	  <tr>
 		<td><small>1. Percent people with a job</small> </td>
@@ -337,7 +339,7 @@ License: Creative Commons Attribution
 	  <tr>
 		<td><small>5. Percent with a medium long education</td>
 		<td><small>5. Percent between 40-49 years</small></td>
-		<td><small>5. Percent houses larger than m<sup>2</sup></small></td>
+		<td><small>5. Percent homes larger than m<sup>2</sup></small></td>
 
 	  </tr>
 	  <tr>
@@ -361,11 +363,11 @@ License: Creative Commons Attribution
 	  <tr>
 		<td><small>9. Percent people with a workman education</td>
 		<td><small>9. Percent couples with children</small></td>
-		<td><small>9. Percent houses with size 60m<sup>2</sup>-79m<sup>2</sup></small></td>
+		<td><small>9. Percent homes with size 60m<sup>2</sup>-79m<sup>2</sup></small></td>
 
 	  </tr>
 	  <tr>
-		<td><small>10. Percent houses larger than 120m<sup>2</sup></td>
+		<td><small>10. Percent homes larger than 120m<sup>2</sup></td>
 		<td><small>10. Percent with a medium long education</small></td>
 		<td><small>10. Percent net newcomers</small></td>
 
@@ -377,7 +379,7 @@ License: Creative Commons Attribution
 	Conclusin for regression
 	</h2>
 	<p>
-	Both of the regression methods performed well. Their predictions errors are generally low of around 5%. Even lower if elastic net is used for the individual years and random forest for all the years combined.
+	Both of the regression methods performed well. Their predictions errors are generally low with values around 5%. Even lower if elastic net is used for the individual years and random forest for all the years combined.
 	The most important features make a lot of sense and is a good guideline for you, if you want to look for your ideal district!
 	</p>
 <article>
@@ -385,7 +387,8 @@ License: Creative Commons Attribution
 		<div class="article-info">K-means</div>
 			<div class="text-container">
 				<p>
-					Now you might have decided on the district that is just right for you! But what if you want to try something new at some point? Fear not! Using a K-means algortihm with 4 clusters.
+					Now you might have decided on the features that are just right for you! And can now find your ideal district!
+					But what if you want to try something new at some point? Fear not! Using a K-means algortihm with 4 clusters.
 					We have made a map where each cluster is colored in a different color. The K-means algortihm is run on the features:
 				</p>
 				<ul>
@@ -401,7 +404,7 @@ License: Creative Commons Attribution
 				 <p>
 				 The data was standarized before running the algorithm, since some of the numbers are a lot higher than others, and would just dominate otherwise.
 				 The result can be seen for each year by using the slider. This way you can see if your new favourite district tend to change cluster over the years and should be avoided.
-				 A cluster might change color over the years. But this is simply due to the nature of K-means! Do not worry!
+				 A cluster might change color over the years. But this is simply due to the nature of K-means, since the clusters are initialized randomly! Do not worry!
 				 </p>
 				 <p>
 				 Enjoy! And happy hunting for a similar district!
@@ -505,8 +508,8 @@ var tip = d3.tip()
 	  	return 	"<div  class='tiphead' ><strong>"+ d['properties']['rodenavn'] +"</strong></div>" + 
 	    		"<div><strong>Number of homes:</strong> <span class='tipperCol' >" + d['properties'][year]['Num_house'] + "</span></div>" +
           "<div><strong>Number of inhabitants:</strong> <span class='tipperCol' >" + d['properties'][year]['Num_people'] + "</span></div>" +
-          "<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties'][year]['High_inc'] + "</span></div>" +
-          "<div><strong>% of danes:</strong> <span class='tipperCol' >" + d['properties'][year]['Pct_danes'] + "</span></div>" ;
+          "<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties'][year]['High_inc'] + "%</span></div>" +
+          "<div><strong>% of danes:</strong> <span class='tipperCol' >" + d['properties'][year]['Pct_danes'] + "%</span></div>" ;
 	  });
 svg.call(tip);
 //-----------------//
@@ -567,8 +570,7 @@ d3.select('.High_inc').on('click', function(){
 
 
 function createMap() {
-	d3.json("geodata_clustering.geojson", function(error,json) {
-    console.log(json)
+	d3.json("d3-data/geodata_clustering.geojson", function(error,json) {
 
     if (error) throw error;
     mapG.append("g")

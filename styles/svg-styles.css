@@ -1,0 +1,234 @@
+/** For the map **/
+
+svg {
+	/*shape-rendering: crispEdges;*/
+}
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+
+.map-district {
+	stroke-width:0.2;
+	stroke:#626262;
+}
+.map-district:hover {
+/*	stroke-width: 1;
+	stroke:#FFFFFF;*/
+    fill-opacity: .7;
+}
+
+
+@keyframes blink {
+    0% {
+           opacity: 0
+    }
+    50% {
+           opacity: 1
+    }
+    100% {
+           opacity: 0
+
+    }
+}
+@-webkit-keyframes blink {
+    0% {
+           opacity: 0
+    }
+    50% {
+           opacity: 1
+    }
+    100% {
+           opacity: 0
+    }
+}
+
+ .active {
+    -moz-transition:all 0.5s ease-in-out;
+    -webkit-transition:all 0.5s ease-in-out;
+    -o-transition:all 0.5s ease-in-out;
+    -ms-transition:all 0.5s ease-in-out;
+    transition:all 0.5s ease-in-out;
+
+    -moz-animation:blink normal 1.5s infinite ease-in-out;
+    /* Firefox */
+    -webkit-animation:blink normal 1.5s infinite ease-in-out;
+    /* Webkit */
+    -ms-animation:blink normal 1.5s infinite ease-in-out;
+    /* IE */
+    animation:blink normal 1.5s infinite ease-in-out;
+    /* Opera */
+}
+
+#district-borders {
+  fill: none;
+  stroke:#626262;
+  stroke-width: 0.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+.d3-tip {
+	line-height: 1;
+	padding: 12px;
+	background: rgba(0, 0, 0, 0.8);
+	color: #fff;
+	border-radius: 4px;
+    /*width: 230px;*/
+}
+strong {
+    text-align: left;
+}
+
+.tipperCol {
+	color: #B3B3B3;
+    float:right;
+    margin-left: 8px;
+}
+
+.tiphead {
+    color: #51AEE7;
+    text-align: center;
+    padding: 5px;
+    font-size: 20px;
+}
+
+
+.key2 {
+	border-radius: 50px;
+}
+
+.colorbar .axis line{
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.colorbar .axis .domain{
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+
+/* SLIDER*/
+
+.slider-label{
+	font-size: 20px;
+	font-weight:bold
+}
+
+.slider-input{
+	border:0;
+	color:#3F81A8;
+	font-size: 20px; 
+	font-weight:bold;
+}
+
+.container {
+}
+
+text.caption {
+	font-size: 14px;	
+}
+text.smallcap {
+	font-size: 12px;
+	font-weight: lighter;	
+}
+
+/** For the bars **/
+.hidden {
+	visibility: hidden;
+}
+
+/** For the axis on bar **/
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+}
+
+path.domain {
+    stroke: none;
+}
+ 
+.y .tick line {
+    stroke: #ddd;
+}
+.x .tick text {
+    /*font-size: 16px;*/
+    font-weight: lighter;   
+
+}
+
+.nation-title {
+    color:#2f2f2f;
+    font-weight:bold;
+    padding:0 0 5px;
+    margin:0;
+    color:#6296B4;
+    font-size:1.6em;
+    padding-bottom:10px;
+}
+
+
+g.tick text {
+	font-size: 11px;
+	font-weight: lighter;	
+}
+
+/** for the legend on bar */
+.legend {
+	font-size: 12px;
+	font-weight: lighter;	
+}
+
+/**----------------------**/
+
+
+/*BUTTONS SELECTION FOR NATIONALITY*/
+
+.select-style {
+    border: 1px solid #ccc;
+    width: 120px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}
+
+.table1 td {
+    text-align: right;
+    
+} 
+th{
+    text-align: center;
+}

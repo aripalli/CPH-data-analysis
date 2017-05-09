@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=22" type="text/css" />
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+<link rel="stylesheet" href="styles/svg-styles.css?version=22" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
-<script src="colorbrewer.min.js"></script>
+<script src="d3/colorbrewer.min.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -49,7 +49,11 @@ License: Creative Commons Attribution
 
 			<div class="text-container">
 				<p>
-				For the data anlysis and preprocessing IPython was used with Python 2.7 . The whole process was documented thouroughly and for interested data nerds the notebooks are viewable shown here below
+				For the data anlysis and preprocessing IPython was used with Python 2.7 . The whole process was documented thouroughly and for interested data nerds the notebooks are viewable by clicking the links below.
+				<br>
+				There is also an "Explorer Notebook". Here you can read all about our motivation and ideas. The questions that should be answered for the assignment can be found here.
+				<br>
+				A few notebooks with data preprocessing for the D3 visualizations have been left out, since there is nothing interesting going on here, besides a lot of Python code.
 				</p>
 			</div>
 			<div class="viz-container"></div>
@@ -60,12 +64,12 @@ License: Creative Commons Attribution
 			<div class="article-info">No, it is not Monty Python</div>
 			<div class="text-container">
 				<p>
-				It is recommended to follow the button on the sidebar in order from top to bottom.
+				The ipython notebooks are split in to 4 notebooks for convenience and structure.
 					<ul>
-					  <li><a href="#">Explorer Notebook:</a>Some basic text about this  </li>
-					  <li><a href="#">AnotherFurther Analysis:</a>Some basic text about this </li>
-					  <li><a href="#">Machine Learning Notebook:</a>Some basic text about this </li>
-					  <li><a href="#">Some other notebook:</a>Some basic text about this </li>
+					  <li><a href="http://nbviewer.jupyter.org/github/aripalli/CPH-data-analysis/blob/master/ipython-notebooks/Our%20project.ipynb">Explorer Notebook:</a><br>This notebook contains all explanations of our analysis and decisions. In this notebook we link to different code snippets related to the work.</li>
+					  <li><a href="http://nbviewer.jupyter.org/github/aripalli/CPH-data-analysis/blob/master/ipython-notebooks/Nationality_distribution.ipynb">Analysis on nationalities:</a><br>Data cleaning, preprocessing and analysis on the nationalities dataset</li>
+					  <li><a href="http://nbviewer.jupyter.org/github/aripalli/CPH-data-analysis/blob/master/ipython-notebooks/Machine%20learning.ipynb">Machine Learning Notebook:</a><br>The Elastic Net and Random Forest machine learning methods are created and analyzed in this notebook</li>
+					  <li><a href="http://nbviewer.jupyter.org/github/aripalli/CPH-data-analysis/blob/master/ipython-notebooks/Clustering.ipynb">Clustering the socio economic data:</a><br>This notebook contains K-means clustering part of the socio-economic data.</li>
 					</ul>
 				</p>
 			</div>

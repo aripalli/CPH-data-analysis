@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles.css?version=1" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=23" type="text/css" />
+<link rel="stylesheet" href="styles/styles.css?version=1" type="text/css" />
+<link rel="stylesheet" href="styles/svg-styles.css?version=26" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
-<script src="colorbrewer.min.js"></script>
+<script src="d3/colorbrewer.min.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -58,9 +58,7 @@ License: Creative Commons Attribution
 				<li>The buttons on top colors the districts based on percent danes or percent with high income</li>
 				<li>Hover over a district to get some basic information about it</li>
 				</ul>
-				<p>
-				
-				</p>
+
       <a  class="button Pct_danes" style="cursor:pointer">Percentage of Danes</a>
       <a  class="button button-reversed High_inc" style="cursor:pointer">Percentage of high income</a>
 			<div class="viz-container-2 container"></div>
@@ -78,29 +76,40 @@ License: Creative Commons Attribution
 					<div id="slider-range-max"></div>
 				<div>
 			</div>
-		
+			<br>
+			<p>
+				The preprocessed data for this page can be found <a href="https://github.com/aripalli/CPH-data-analysis/blob/master/d3-data/geodata.geojson">here for the map</a> and <a href="https://github.com/aripalli/CPH-data-analysis/blob/master/d3-data/bardata.json">here for the bars</a>
+				</p>
 		</article>
     <article>
-          <h2>Example outliers</h2>
+          <h2>Interesting roder (districts)</h2>
     <div class="article-info Egmonts">Not the 10.000 hour rule</div>
-    Some noteworthy areas to be found in the map and some guesses on why the statistics show these results.
-
+	<p>
+    Below are some noteworthy areas found in the map and some guesses on why the statistics look like they do.
+	</p>
 <div><h3>Egmonts </h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d116">Click to see Egmonts on the map</a></div>
 <p>
-<iframe style="float:right" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9238.751795244722!2d12.560001299520938!3d55.700185366375614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sdk!4v1494229758473" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-If you slide the timeline slider from 2008 to 2013 we can notice that some areas are always red/orange. One of them is Egmonts. The initial thought was it has probably a low percentage of danes living in this area. However we can see there is about 89% danes living in this area. But as seen from the stacked age bar there are only people in age of 18 - 29 living there. That is interesting! If we go to google maps here below we see that the only homes to be found in this area are college campuses (d. kolllegi). That explaines the low percentage of wealthy people in that area.</p>
+<iframe style="float:right" src="https://www.google.com/maps/d/embed?mid=1tLv9DplwKxtYXd5mFgub7V5JEZo" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+If you move the timeline slider from 2008 to 2013 it can be seen that some areas are always red/orange. One of them is Egmonts. The initial thought was it has probably a low percentage of danes living in this area.
+ However we can see there is about 89% danes living in this area. But as seen from the stacked age bar there are almost only people of 18 - 29 years living there.
+ That is interesting! If we go to the google maps to the right we see that the only homes to be found in this area are college campus dorms. That explaines the low percentage of wealthy people in that area,
+ since all of them are students.</p>
 
 
-<div><h3>Nørre Alles</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d115">Click to see Egmonts on the map</a></div>
+<div><h3>Nørre Alles</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d115">Click to see Nørre Alles on the map</a></div>
 <p>
+The same can be seen for the area Nørre Alles, which is next to Egmonts. It has a low percentage of wealthy residents, however there are no dorms there.
+ But if you click on the area you can see the age distribution. A large portion of the people are above 65 years old. If we look closer into this area we have found out that there is a home for the elderly,
+ <a href="https://en.wikipedia.org/wiki/De_Gamles_By">De Gamles By</a>, occupying the area. We also notice from the income bar that the majority of the people in Nørre Alles have medium income compared to the college
+ dorm which consisted mostly of low income people. A similiar area with an elder home is <a style="cursor:pointer" class="exampledistrict" id="d372">Sundparken (click to see on map)</a>.
 
-some text here about egmontsfsadfas vaerg argamrkgælaergml  garg adrklg  egklrg ars jgklarg jlkaerg aelkrgj aekglæj ardsgjkladr gjklaeærg jlkæegvj aeiobr jearoipb jeaoipb ajebiopa jrbioaj erboi eabpioaej bpioae </p>
-
-
-<div><h3>Gavlhus</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d267">Click to see Egmonts on the map</a></div>
+</p>
+<div><h3>Gavlhus</h3><a  style="cursor:pointer" class="button button-small exampledistrict" id="d267">Click to see Gavlhus on the map</a></div>
 <p>
-
-some text here about egmontsfsadfas vaerg argamrkgælaergml  garg adrklg  egklrg ars jgklarg jlkaerg aelkrgj aekglæj ardsgjkladr gjklaeærg jlkæegvj aeiobr jearoipb jeaoipb ajebiopa jrbioaj erboi eabpioaej bpioae </p>
+Other areas that have low percentage of high income residents over all years include Gavlhus and Tingbjergs. 
+Tingbjergs is next to Gavlhus. If you click on one of these distrtics, you can see that the age distribution is not abnormal as the areas metnioned above. 
+However if you hover over the district or click the "Precentage of Danes button" you find out that this area has almost 75% foreigners living there. Is that perhaps the reason?
+</p>
 
 
 
@@ -453,8 +462,8 @@ var tip = d3.tip()
 	  	return 	"<div  class='tiphead' ><strong>"+ d['properties']['rodenavn'] +"</strong></div>" + 
 	    		"<div><strong>Number of homes:</strong> <span class='tipperCol' >" + d['properties'][year]['Num_house'] + "</span></div>" +
           "<div><strong>Number of inhabitants:</strong> <span class='tipperCol' >" + d['properties'][year]['Num_people'] + "</span></div>" +
-          "<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties'][year]['High_inc'] + "</span></div>" +
-          "<div><strong>% of danes:</strong> <span class='tipperCol' >" + d['properties'][year]['Pct_danes'] + "</span></div>" ;
+          "<div><strong>% of high income:</strong> <span class='tipperCol' >" + d['properties'][year]['High_inc'] + "%</span></div>" +
+          "<div><strong>% of danes:</strong> <span class='tipperCol' >" + d['properties'][year]['Pct_danes'] + "%</span></div>" ;
 	  });
 svg.call(tip);
 //-----------------//
@@ -463,7 +472,7 @@ var globalRodeId = 1;
 
 
 function editBar(rodeId) {
-	d3.json("bardata.json", function(error,jsonBar) {
+	d3.json("d3-data/bardata.json", function(error,jsonBar) {
 
 		if (error) throw error;
 
@@ -546,6 +555,8 @@ function clicked(d,rodeId) {
 var objective = 'High_inc'
 
 d3.select('.Pct_danes').on('click', function(){
+  d3.select(this).classed("button-reversed",true)
+  d3.select('.High_inc').classed("button-reversed",false)
   d3.select('.caption').text('% of Danes')
   objective = 'Pct_danes'
   year = d3.select('#amount').property("value")
@@ -553,6 +564,8 @@ d3.select('.Pct_danes').on('click', function(){
 });
 
 d3.select('.High_inc').on('click', function(){
+  d3.select(this).classed("button-reversed",true)
+  d3.select('.Pct_danes').classed("button-reversed",false)
   d3.select('.caption').text('% of high income')
   objective = 'High_inc'
   year = d3.select('#amount').property("value")
@@ -575,7 +588,7 @@ d3.selectAll('.exampledistrict').on('click',function() {
 
 
 function createMap() {
-	d3.json("geodata.geojson", function(error,json) {
+	d3.json("d3-data/geodata.geojson", function(error,json) {
     console.log(json)
 
     if (error) throw error;

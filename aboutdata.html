@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles.css?version=1" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=22" type="text/css" />
+<link rel="stylesheet" href="styles/styles.css?version=1" type="text/css" />
+<link rel="stylesheet" href="styles/svg-styles.css?version=22" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
-<script src="colorbrewer.min.js"></script>
+<script src="d3/colorbrewer.min.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -57,28 +57,32 @@ ul.aboutdatalist {
 	<h2>About the data</h2>
 	The data we use is open city data from <a href="http://data.kk.dk">Copenhagen </a> and is divided into two datasets. 
 	<p></p>
-		<h3>Dataset 1: <a href="http://data.kk.dk/dataset/befolkningen-efter-ar-bydel-alder-og-statsborgerskab"> Population by year,district, age and nationality</a></h3>
-		<div class="article-info">Size: 9.3 MB, 5 variables, lines: 542518, range: 1992-2015</div>
-		<p>This dataset is maintained by the commune of Copenhagen and is in danish and is yearly updated. It is simple and is basically population in Copenhagen divided by different variables such as: year, citypart, age and nationality. The nationalities are number coded and the conversion can be found <a href="http://www.dst.dk/da/Statistik/dokumentation/Times/forebyggelsesregistret/statkode.aspx">here</a>. The potential with this data is to see any trends of certain nationalities moving in or out of Copenhagen. Additionally to observe how the ratio between local danes and foreignes changes over the years and if some city part are more populated by foreigners or not.		 </p>
-		<div></div>
-
-		 <h5>The data can be downloaded <a href="#">here.</a></h5>
-
+		<h3>Dataset 1: <a href="http://data.kk.dk/dataset/befolkningen-efter-ar-bydel-alder-og-statsborgerskab"> Population by year, district, age and nationality</a></h3>
+		<h5>Size: 9.3 MB, variables: 5, lines: 542518, range: 1992-2015</h5>
+		<p>This dataset is maintained by the municipality of Copenhagen and is updated yearly. It is simple and is basically population in Copenhagen divided by different variables such as:
+		year, district, age and nationality. The districts are the 10 main ones. The nationalities are number coded and the conversion can be found <a href="http://www.dst.dk/da/Statistik/dokumentation/Times/forebyggelsesregistret/statkode.aspx">here</a>.
+		The potential with this data is to see any trends of certain nationalities moving in or out of Copenhagen. Additionally to observe how the ratio between local danes and foreignes changes over
+		the years and if some districts are more populated by foreigners than others.	 
+		</p>
+		 <h5>The raw data can be downloaded <a href="https://github.com/aripalli/CPH-data-analysis/blob/master/Data/befkbhalderstatkode.csv">here.</a></h5>
+		<br>
 
 		<h3>Dataset 2: <a href="http://data.kk.dk/dataset/samlede-socio-data-kbh">
 Socioeconominal data for Copenhagen</a></h3>
-		<div class="article-info">Size: 7.8 MB, variables: HOW MANY VARIALBES, lines: HOW MANY LINES,range: 2008-2013</div>
-<p>This dataset has more potential than the first one. It contains various socio economical information/statistics of the city. Each row represent these statistics in a certain ares called "rode" in danish for a given year. The rode-area is the historically division of the tax collection areas. Today it is used for statistical purposes. It is a subdivision of districts. Some variables of the statistics include:</p>
+		<h5>Size: 7.8 MB, variables: 128, lines: 2763, range: 2008-2014</h5>
+<p>This dataset has more potential than the first one. It contains various socio economical information/statistics of the city. Each row represent these statistics in a certain area, in danish called "rode", for a given year.
+ The rode-area is the historically division of the tax collection areas. Today it is used for statistical purposes. It is a subdivision of the 10 main districts in the other dataset.
+The dataset contains a lot of variables. Some variables of the statistics include:
+</p>
 
 <ul class="aboutdatalist">
-<li> Percent houses larger than m<sup>2</sup> </li>
+<li> Percent homes larger than 120m<sup>2</sup> </li>
 <li> Percent without an education  </li>
 <li> Percent with a medium income </li>
 <li> Percent with a long education  </li>
 <li> Percent singles without children </li>
 <li> Percent owner-occupied dwelling </li>
 <li> Percent people between different age groups  </li>
-<li> Average home area pr. person </li>
 <li> Percent with a medium long education </li>
 <li> Percent homes build for various years </li>
 <li> Percent wage earners </li>
@@ -87,19 +91,19 @@ Socioeconominal data for Copenhagen</a></h3>
 <li> Percent couples with children  </li>
 <li> Percent people with their own business  </li>
 <li> Percent with a job </li>
-<li> Percent houses with size 60m<sup>2</sup>-79m<sup>2</sup> </li>
+<li> Percent homes with size 60m<sup>2</sup>-79m<sup>2</sup> </li>
 <li> Percent net newcomers </li>
 <li> Percent people studying </li>
 <li> Percent people with a workman education </li>
 <li> Percent people with no education </li>
-<li> Average house area pr. person </li>
 <li> Average home area pr. person </li>
 <li> Percent general housing </li>
 </ul>
-
-With this dataset we can draw the Copenhagen areas and try to find patterns with the statistics. Furthermore, visually see if certain areas group together or not. As there are many variables in this dataset there is a possibility to build models which will be able to predict where danes live and the upper class.
-
- <h5>The data can be downloaded <a href="#">here.</a></h5>
+<p>
+With this dataset we can draw the Copenhagen areas and try to find patterns with the statistics. Furthermore, visually see if certain areas group together or not. 
+As there are many variables in this dataset there is a possibility to build models which will be able to predict where danes live and the where the upper class lives.
+</p>
+ <h5>The raw data can be downloaded <a href="https://github.com/aripalli/CPH-data-analysis/blob/master/ipython-notebooks/samlede_socio_data_kbh.csv">here.</a></h5>
 
 </section>
 	<div class="clear"></div>

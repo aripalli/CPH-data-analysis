@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF8">
 <title>Social Data & Visualization - Final Project</title>
-<link rel="stylesheet" href="styles.css" type="text/css" />
-<link rel="stylesheet" href="svg-styles.css?version=22" type="text/css" />
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+<link rel="stylesheet" href="styles/svg-styles.css?version=22" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="d3/d3.js"></script>
 <script type="text/javascript" src="d3/index.js"></script>
-<script src="colorbrewer.min.js"></script>
+<script src="d3/colorbrewer.min.js"></script>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -56,32 +56,38 @@ License: Creative Commons Attribution
 				</p>
 
               	<p>
-              	Small comedy video to set you into the nordic mode before you will be blown away with extreme visualisation.
+              	Small comedy video to set you into the nordic mode before you will be blown away with extreme visualizations.
               	</p>
               	<p align="center">
 				<iframe width="560" height="315" src="https://www.youtube.com/embed/nikVNrviHug" frameborder="0" allowfullscreen></iframe>
 				</p>
-
-
-
-
-
-
 				<p>
-                    <i>The quest: </i> For a long time, Iceland was part of the Danish monarchy (from 1380 to 1944). Icelandic declared its independence when Denmark was under nazi occupation and could not do anything (clever Icelandic people!). 
-                    However, through the years Copenhagen has been like a second capital for Icelandic people as many Icelanders seek better life by moving here. Many Icelandic people have a danish degree (especially higher education) as the Icelandic education system is not great (It's difficult to offer a very good education system for an only population of 330,000). Also, Icelandic people learn danish from the age 12 to 18 and gives them the idea that they are fluent danish speakers (Kan jeg få en øl? is what most Icelandic people know to say). 
+                    <i>The quest: </i> For a long time Iceland was part of the Danish monarchy (from 1380 to 1944). Icelandic declared its independence when Denmark was under nazi occupation and
+					could not do anything (clever Icelandic people!). 
+                    However, through the years Copenhagen has been like a second capital for the Icelandic people as many Icelanders seek a better life by moving here. 
+					Many Icelandic people have a danish degree (especially higher education) as the Icelandic education system is not great (It's difficult to offer a very good education system
+					to a population of only 330,000). The Icelandic people learn danish from the age 12 to 18, and gives them the idea that they are fluent danish speakers (Kan jeg få en øl?
+					is what most Icelandic people can say). 
                     <br>
-                    It's not only the historical reasons why Icelandic people seeks for a better life when moving to Copenhagen. For many years, Copenhagen has been ranked one of the top countries for quality of living, <a href="http://www.bbc.com/travel/story/20110906-living-in-copenhagen">(see article)</a>.
+					<br>
+                    It is not only the historical reasons that make the Icelandic people seek a better life in Copenhagen.
+					For many years Copenhagen has been ranked one of the top countries for quality of living,
+					<a href="http://www.bbc.com/travel/story/20110906-living-in-copenhagen">(see article)</a>.
                     <br>
-                    Therefore, We wanted to see if how many Icelandic people live here in Copenhagen and how it have changed through the years. Did the financial crisis in Iceland make more Icelandic people move to Copenhagen seeking for better life (seeking job, education etc.) and are Icelandic people now returning to Iceland now when the Icelandic economy is blooming (Iceland is now ranked as top countries in GDP per capita <a href="http://vi.is/%C3%BAtg%C3%A1fa/sk%C3%BDrslur/the_icelandic_economy_2016.pdf">(see article)</a>) or is the Copenhagen life too good? 
-                    <br>
-                    We wanted also to investigate if there are any other countries which have strong connection to Denmark and try to find out why that is?
+                    Therefore, We wanted to investigate how many Icelandic people live here in Copenhagen and how it has changed through the years. 
+					Did the financial crisis in Iceland make more Icelandic people move to Copenhagen seeking a better life (seeking job, education etc.)
+					and are Icelandic people now returning to Iceland now when the Icelandic economy is blooming (Iceland is now ranked as one of the top countries based on GDP per capita
+					<a href="http://vi.is/%C3%BAtg%C3%A1fa/sk%C3%BDrslur/the_icelandic_economy_2016.pdf">(see article)</a>) or is the Copenhagen life too good? 
+                    <br>                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/Districts_of_Copenhagen_urban_area.png" alt="Districts" style="width:250px;height:100%;" align="right">
+                    We also wanted to investigate if there are any other countries which have strong connections to Denmark and try to find out why that is.
                     Are the other nordic countries also seeking the good life here in Copenhagen? 
                     <br>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/Districts_of_Copenhagen_urban_area.png" alt="Districts" style="width:300px;height:100%;" align="right">
-                    Copenhagen is normally split up into ten large districts as seen on the figure <a href="https://en.wikipedia.org/wiki/Districts_of_Copenhagen">(see source)</a> on the right. We wanted to see if there are some districts that Danes or other foreign countries prefer and try to find out why that is?
+					<br>
+                    Copenhagen is normally split up into ten large districts as seen on the figure <a href="https://en.wikipedia.org/wiki/Districts_of_Copenhagen">(see source)</a> on the right.
+					We wanted to see if there are some districts that Danes or other foreign countries prefer and try to find out why that is?
                     <br>
-                    We wanted also, to split up the districts even more and try to see where the "Wealthy" areas of Copenhagen is and see what features are significant for "wealthy" areas and how good are the predictions for wealthy areas using theses features.
+                    We also wanted to split up the districts even more and try to see for instance where the wealthy areas of Copenhagen are and see what features are significant for wealthy
+					areas and how well we can predict if a district is wealthy or not. We also look at other features and try to predict them.
 
 
 
@@ -121,21 +127,20 @@ License: Creative Commons Attribution
 		</div>
 		<article><div class="inside-article">				
 		<h2>Let it flow</h2>
-		<img src="thedataman.png" alt="dataman" style="width:300px;height:100%;" align="right">
+		<img src="figures/thedataman.png" alt="dataman" style="width:300px;height:100%;" align="right">
 			<div class="article-info">Recommendations from the Data-Man on how to go through the analysis and result to achieve optimal experience</div>
 
 			<div class="text-container">
 				<p>
-				The Data-Man recommendeds to follow the buttons on the sidebar in order from top to bottom.
+				The Data-Man recommends to follow the buttons on the sidebar in order from top to bottom.
 					<ul>
-					  <li><b>About the data: </b>The Data-Man go through which data he used.</li>
-					  <li><b>Nationality distribution: </b>Here will the Data-Man show off his visualising skills and go through what he found was interesting while analysing nationalities in Copenhagen.</li>
-					  <li><b>Interactive Map: </b>Here is Data-Man just showing off his amazing D3 skills and has analysed interesting features about the districts in Copenhagen.</li>
+					  <li><b>About the data: </b>The Data-Man go through which data sets he used.</li>
+					  <li><b>Nationality distribution: </b>Here the Data-Man will show off his visualising skills and go through what he found was interesting while analysing nationalities in Copenhagen.</li>
+					  <li><b>Interactive Map: </b>Here the Data-Man is just showing off his amazing D3 skills and has analysed interesting features about the districts in Copenhagen.</li>
 					  <li><b>Machine Learning: </b>The Data-Man is not afraid of showing off his <em> Machine Learning </em> skills and will go through which method he used to find interesting features to predict with.</li>
-					  <li><b>Summary & Conclusions: </b>Before you end your visualising tour about Copenhagen, Data-Man wants to sum up what interesting things he found and his last words. </li>
+					  <li><b>Ipython Notebooks</b> You want more? Here is all about the analysis an preprocessing</li>
 					</ul>
- 
-					If you want to know more and dive deeper into the analysis Data-Man recommends to go to his <a href="#">explainer Notebook </a>which contains all the behind the scenes material. Data-Man out!
+ 				 Data-Man out!
 
 				</p>
 			</div>
